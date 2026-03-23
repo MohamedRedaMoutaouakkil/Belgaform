@@ -1,0 +1,1194 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Belgaform Training Center — Sala Al Jadida</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700&family=Bebas+Neue&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --black: #050507;
+      --dark: #0d0d12;
+      --card: #111118;
+      --blue: #1a6fff;
+      --blue-bright: #3d8dff;
+      --white: #f0f0f5;
+      --grey: #888899;
+      --nav-h: 72px;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: "Barlow", system-ui, sans-serif;
+      background: var(--black);
+      color: var(--white);
+      line-height: 1.55;
+      overflow-x: hidden;
+    }
+
+    img { max-width: 100%; height: auto; display: block; }
+
+    .clip-btn {
+      clip-path: polygon(0 0, calc(100% - 14px) 0, 100% 14px, 100% 100%, 14px 100%, 0 calc(100% - 14px));
+      border: none;
+      cursor: pointer;
+      font-family: inherit;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      font-size: 0.85rem;
+      padding: 0.9rem 1.6rem;
+      transition: transform 0.2s, box-shadow 0.2s, background 0.2s, color 0.2s;
+    }
+    .clip-btn:hover { transform: translateY(-2px); }
+    .clip-btn--blue {
+      background: linear-gradient(135deg, var(--blue), #155fcc);
+      color: var(--white);
+      box-shadow: 0 8px 32px rgba(26, 111, 255, 0.35);
+    }
+    .clip-btn--blue:hover { box-shadow: 0 12px 40px rgba(26, 111, 255, 0.5); }
+    .clip-btn--ghost {
+      background: transparent;
+      color: var(--white);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+    .clip-btn--ghost:hover {
+      border-color: var(--blue);
+      color: var(--blue-bright);
+    }
+
+    .section-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.75rem;
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--grey);
+      margin-bottom: 0.75rem;
+    }
+    .section-label::before {
+      content: "";
+      width: 32px;
+      height: 2px;
+      background: var(--blue);
+    }
+
+    .section-title {
+      font-family: "Bebas Neue", Impact, sans-serif;
+      font-size: clamp(2.25rem, 5vw, 3.75rem);
+      letter-spacing: 0.04em;
+      line-height: 1.05;
+      margin-bottom: 1rem;
+    }
+
+    /* Fade up */
+    .fade-up {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .fade-up.is-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ----- NAV ----- */
+    .nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 1000;
+      height: var(--nav-h);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 clamp(1rem, 4vw, 3rem);
+      background: rgba(5, 5, 7, 0.55);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    }
+    .nav__brand {
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+      text-decoration: none;
+      color: var(--white);
+    }
+    .nav__wordmark {
+      font-family: "Bebas Neue", sans-serif;
+      font-size: 1.35rem;
+      letter-spacing: 0.12em;
+    }
+    .nav__links {
+      display: flex;
+      align-items: center;
+      gap: 1.75rem;
+      list-style: none;
+    }
+    .nav__links a {
+      color: var(--grey);
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+    .nav__links a:hover { color: var(--white); }
+    .nav__cta.clip-btn { padding: 0.65rem 1.25rem; font-size: 0.8rem; }
+
+    @media (max-width: 900px) {
+      .nav__links { display: none; }
+    }
+
+    /* ----- HERO ----- */
+    .hero {
+      position: relative;
+      min-height: 100vh;
+      min-height: 100dvh;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: calc(var(--nav-h) + 2rem) clamp(1rem, 4vw, 3rem) 2rem;
+    }
+    .hero__slides {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+    }
+    .hero__slide {
+      position: absolute;
+      inset: 0;
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      opacity: 0;
+      transition: opacity 1.2s ease-in-out;
+    }
+    .hero__slide.is-active { opacity: 1; }
+    .hero__overlay {
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      background: linear-gradient(
+        to top,
+        rgba(5, 5, 7, 0.95) 0%,
+        rgba(5, 5, 7, 0.5) 45%,
+        rgba(5, 5, 7, 0.35) 100%
+      );
+      pointer-events: none;
+    }
+    .hero__content {
+      position: relative;
+      z-index: 2;
+      max-width: 900px;
+    }
+    .hero__badge {
+      display: inline-block;
+      padding: 0.4rem 0.9rem;
+      border: 1px solid rgba(26, 111, 255, 0.45);
+      background: rgba(26, 111, 255, 0.12);
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--blue-bright);
+      margin-bottom: 1.25rem;
+      animation: heroBadge 4s ease-in-out infinite;
+    }
+    @keyframes heroBadge {
+      0%, 100% { opacity: 1; transform: translateY(0); }
+      50% { opacity: 0.85; transform: translateY(-4px); }
+    }
+    .hero h1 {
+      font-family: "Bebas Neue", sans-serif;
+      font-size: clamp(3.5rem, 12vw, 7.5rem);
+      line-height: 0.95;
+      letter-spacing: 0.02em;
+      margin-bottom: 1rem;
+    }
+    .hero__lead {
+      font-size: 1.1rem;
+      color: var(--grey);
+      max-width: 520px;
+      margin-bottom: 1.75rem;
+    }
+    .hero__actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+    .hero__stats {
+      position: absolute;
+      z-index: 2;
+      right: clamp(1rem, 4vw, 3rem);
+      bottom: 2rem;
+      display: flex;
+      gap: 1.5rem;
+      padding: 1rem 1.25rem;
+      background: rgba(17, 17, 24, 0.75);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      backdrop-filter: blur(10px);
+    }
+    .hero__stat {
+      text-align: center;
+    }
+    .hero__stat strong {
+      display: block;
+      font-family: "Bebas Neue", sans-serif;
+      font-size: 1.35rem;
+      color: var(--white);
+      letter-spacing: 0.06em;
+    }
+    .hero__stat span {
+      font-size: 0.72rem;
+      color: var(--grey);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+    @media (max-width: 900px) {
+      .hero__stats { display: none; }
+      .hero { padding-bottom: 3rem; }
+    }
+
+    /* ----- ACTIVITIES ----- */
+    .activities {
+      padding: 5rem clamp(1rem, 4vw, 3rem);
+      background: var(--dark);
+    }
+    .activities__grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1rem;
+      margin-top: 2.5rem;
+    }
+    .act-card {
+      position: relative;
+      min-height: 280px;
+      border: 1px solid rgba(255, 255, 255, 0.07);
+      overflow: hidden;
+      cursor: pointer;
+      transition: border-color 0.35s, box-shadow 0.35s;
+    }
+    .act-card:hover {
+      border-color: rgba(26, 111, 255, 0.55);
+      box-shadow: 0 0 32px rgba(26, 111, 255, 0.15);
+    }
+    .act-card--wide { grid-column: span 2; min-height: 320px; }
+    .act-card__bg {
+      position: absolute;
+      inset: 0;
+      background-size: cover;
+      background-position: center;
+      transition: transform 0.6s ease;
+    }
+    .act-card:hover .act-card__bg { transform: scale(1.05); }
+    .act-card__shade {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(5, 5, 7, 0.92) 0%, transparent 55%);
+    }
+    .act-card__inner {
+      position: absolute;
+      inset: 0;
+      padding: 1.25rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      z-index: 2;
+    }
+    .act-card__tag {
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--blue-bright);
+      margin-bottom: 0.35rem;
+    }
+    .act-card h3 {
+      font-family: "Bebas Neue", sans-serif;
+      font-size: 1.85rem;
+      letter-spacing: 0.06em;
+    }
+    .act-card__desc {
+      max-height: 0;
+      opacity: 0;
+      overflow: hidden;
+      font-size: 0.88rem;
+      color: var(--grey);
+      margin-top: 0.5rem;
+      transition: max-height 0.45s ease, opacity 0.35s ease;
+    }
+    .act-card:hover .act-card__desc {
+      max-height: 120px;
+      opacity: 1;
+    }
+    .act-card__arrow {
+      position: absolute;
+      top: 1.25rem;
+      right: 1.25rem;
+      width: 40px;
+      height: 40px;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--white);
+      transition: background 0.25s, border-color 0.25s, color 0.25s;
+    }
+    .act-card:hover .act-card__arrow {
+      background: var(--blue);
+      border-color: var(--blue);
+    }
+    @media (max-width: 900px) {
+      .activities__grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .act-card--wide { grid-column: span 2; }
+    }
+    @media (max-width: 520px) {
+      .activities__grid { grid-template-columns: 1fr; }
+      .act-card--wide { grid-column: span 1; }
+    }
+
+    /* ----- ABOUT ----- */
+    .about {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      min-height: 560px;
+    }
+    .about__visual {
+      position: relative;
+      background: var(--black);
+      padding: 3rem 2rem;
+      overflow: hidden;
+    }
+    .about__visual::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+      background-size: 24px 24px;
+      opacity: 0.5;
+      pointer-events: none;
+    }
+    .about__watermark {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: min(90%, 380px);
+      opacity: 0.12;
+      pointer-events: none;
+    }
+    .about__stats {
+      position: relative;
+      z-index: 2;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1rem;
+      margin-top: auto;
+      padding-top: 8rem;
+    }
+    .stat-glass {
+      padding: 1.25rem;
+      background: rgba(17, 17, 24, 0.65);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      backdrop-filter: blur(8px);
+      text-align: center;
+    }
+    .stat-glass .num {
+      font-family: "Bebas Neue", sans-serif;
+      font-size: 2.5rem;
+      color: var(--blue-bright);
+      line-height: 1;
+    }
+    .stat-glass .lbl {
+      font-size: 0.75rem;
+      color: var(--grey);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-top: 0.35rem;
+    }
+    .about__text {
+      background: var(--card);
+      padding: clamp(2rem, 5vw, 4rem);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      border-left: 1px solid rgba(255, 255, 255, 0.06);
+    }
+    .about__text p { color: var(--grey); margin-bottom: 1.25rem; }
+    .about__list {
+      list-style: none;
+      margin: 1.5rem 0 2rem;
+    }
+    .about__list li {
+      position: relative;
+      padding-left: 1.5rem;
+      margin-bottom: 0.65rem;
+      color: var(--white);
+    }
+    .about__list li::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0.45em;
+      width: 8px;
+      height: 8px;
+      background: var(--blue);
+      transform: rotate(45deg);
+    }
+    @media (max-width: 900px) {
+      .about { grid-template-columns: 1fr; }
+      .about__text { border-left: none; border-top: 1px solid rgba(255, 255, 255, 0.06); }
+    }
+
+    /* ----- SCHEDULE ----- */
+    .schedule {
+      padding: 5rem clamp(1rem, 4vw, 3rem);
+      background: var(--black);
+    }
+    .schedule__grid {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 0.75rem;
+      margin-top: 2.5rem;
+    }
+    .schedule__day {
+      padding: 1.25rem 0.75rem;
+      background: var(--card);
+      border: 1px solid rgba(255, 255, 255, 0.07);
+      text-align: center;
+      transition: border-color 0.25s, box-shadow 0.25s;
+    }
+    .schedule__day.is-today {
+      border-color: var(--blue);
+      box-shadow: 0 0 24px rgba(26, 111, 255, 0.2);
+    }
+    .schedule__day-name {
+      font-family: "Bebas Neue", sans-serif;
+      font-size: 1.25rem;
+      letter-spacing: 0.08em;
+      margin-bottom: 0.5rem;
+    }
+    .schedule__hours {
+      font-size: 0.85rem;
+      color: var(--grey);
+    }
+    .schedule__hours.closed { color: #c44; font-weight: 600; }
+    @media (max-width: 900px) {
+      .schedule__grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    /* ----- PRICING ----- */
+    .pricing {
+      padding: 5rem clamp(1rem, 4vw, 3rem);
+      background: var(--dark);
+      text-align: center;
+    }
+    .section-head--center {
+      text-align: center;
+      max-width: 640px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .section-head--center .section-label {
+      justify-content: center;
+    }
+    .section-head--center .section-label::before,
+    .section-head--center .section-label::after {
+      content: "";
+      width: 32px;
+      height: 2px;
+      background: var(--blue);
+    }
+    .pricing__wrap {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: stretch;
+      gap: 1.5rem;
+      margin-top: 3rem;
+    }
+    .price-card {
+      flex: 1 1 260px;
+      max-width: 320px;
+      padding: 2rem 1.75rem;
+      background: var(--card);
+      border: 1px solid rgba(255, 255, 255, 0.07);
+      text-align: left;
+      transition: border-color 0.3s, transform 0.3s, box-shadow 0.3s;
+    }
+    .price-card:hover {
+      border-color: rgba(26, 111, 255, 0.4);
+      box-shadow: 0 0 28px rgba(26, 111, 255, 0.12);
+    }
+    .price-card--featured {
+      transform: scale(1.05);
+      border-color: var(--blue);
+      box-shadow: 0 16px 48px rgba(26, 111, 255, 0.25);
+      z-index: 1;
+    }
+    .price-card__name {
+      font-family: "Bebas Neue", sans-serif;
+      font-size: 1.75rem;
+      letter-spacing: 0.06em;
+    }
+    .price-card__amt {
+      font-size: 2.25rem;
+      font-weight: 700;
+      color: var(--blue-bright);
+      margin: 0.5rem 0 1.25rem;
+    }
+    .price-card__amt small { font-size: 1rem; font-weight: 500; color: var(--grey); }
+    .price-card ul { list-style: none; }
+    .price-card li {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.5rem;
+      font-size: 0.9rem;
+      color: var(--grey);
+      margin-bottom: 0.65rem;
+    }
+    .price-card li::before {
+      content: "✓";
+      color: var(--blue);
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+    .price-card__badge {
+      display: inline-block;
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--blue-bright);
+      margin-bottom: 0.5rem;
+    }
+    @media (max-width: 900px) {
+      .price-card--featured { transform: none; }
+      .pricing__wrap { flex-direction: column; align-items: center; }
+      .price-card { max-width: 400px; width: 100%; }
+    }
+
+    /* ----- REVIEWS ----- */
+    .reviews {
+      padding: 5rem clamp(1rem, 4vw, 3rem);
+      background: var(--black);
+    }
+    .reviews__header {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+    .reviews__overall {
+      font-size: 1rem;
+      color: var(--grey);
+    }
+    .reviews__overall strong {
+      color: var(--white);
+      font-size: 1.5rem;
+      font-family: "Bebas Neue", sans-serif;
+    }
+    .reviews__grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.25rem;
+    }
+    .review-card {
+      padding: 1.5rem;
+      background: var(--card);
+      border: 1px solid rgba(255, 255, 255, 0.07);
+      transition: border-color 0.25s;
+    }
+    .review-card:hover { border-color: rgba(26, 111, 255, 0.35); }
+    .review-card__stars { color: #f5a623; letter-spacing: 0.1em; margin-bottom: 0.5rem; }
+    .review-card__meta {
+      font-size: 0.8rem;
+      color: var(--grey);
+      margin-bottom: 0.75rem;
+    }
+    .review-card__meta strong { color: var(--white); }
+    .review-card p {
+      font-size: 0.9rem;
+      color: var(--grey);
+      display: -webkit-box;
+      -webkit-line-clamp: 5;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    @media (max-width: 900px) {
+      .reviews__grid { grid-template-columns: 1fr; }
+    }
+
+    /* ----- CONTACT ----- */
+    .contact {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      min-height: 420px;
+    }
+    .contact__info {
+      padding: clamp(2rem, 5vw, 4rem);
+      background: var(--dark);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .contact__row {
+      margin-bottom: 1.25rem;
+      font-size: 0.95rem;
+    }
+    .contact__row strong {
+      display: block;
+      font-size: 0.7rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--grey);
+      margin-bottom: 0.35rem;
+    }
+    .contact__row a { color: var(--blue-bright); text-decoration: none; }
+    .contact__row a:hover { text-decoration: underline; }
+    .contact__map {
+      position: relative;
+      background: var(--black);
+      border-left: 1px solid rgba(255, 255, 255, 0.06);
+      overflow: hidden;
+    }
+    .contact__map-grid {
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(26, 111, 255, 0.08) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(26, 111, 255, 0.08) 1px, transparent 1px);
+      background-size: 32px 32px;
+      opacity: 0.4;
+    }
+    .contact__pin-wrap {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .contact__pin {
+      width: 24px;
+      height: 24px;
+      background: var(--blue);
+      border-radius: 50% 50% 50% 0;
+      transform: rotate(-45deg);
+      box-shadow: 0 0 0 8px rgba(26, 111, 255, 0.25);
+      animation: pinPulse 2s ease-in-out infinite;
+    }
+    @keyframes pinPulse {
+      0%, 100% { box-shadow: 0 0 0 8px rgba(26, 111, 255, 0.25); transform: rotate(-45deg) scale(1); }
+      50% { box-shadow: 0 0 0 20px rgba(26, 111, 255, 0.1); transform: rotate(-45deg) scale(1.08); }
+    }
+    .contact__map-link {
+      position: absolute;
+      bottom: 2rem;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 2;
+    }
+    .contact__map-link a {
+      color: var(--white);
+      font-weight: 600;
+      text-decoration: none;
+      border-bottom: 2px solid var(--blue);
+      padding-bottom: 2px;
+    }
+    .contact__map-link a:hover { color: var(--blue-bright); }
+    @media (max-width: 900px) {
+      .contact { grid-template-columns: 1fr; }
+      .contact__map { min-height: 280px; border-left: none; border-top: 1px solid rgba(255, 255, 255, 0.06); }
+    }
+
+    /* ----- FOOTER ----- */
+    .footer {
+      padding: 3rem clamp(1rem, 4vw, 3rem) 2rem;
+      background: #020203;
+      border-top: 1px solid rgba(255, 255, 255, 0.06);
+    }
+    .footer__top {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 2rem;
+      margin-bottom: 2.5rem;
+    }
+    .footer__brand { max-width: 280px; }
+    .footer__tagline {
+      font-size: 0.85rem;
+      color: var(--grey);
+      margin-top: 0.75rem;
+      line-height: 1.5;
+    }
+    .footer__social {
+      display: flex;
+      gap: 0.75rem;
+      margin-top: 1rem;
+    }
+    .footer__social a {
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      color: var(--grey);
+      transition: border-color 0.2s, color 0.2s, background 0.2s;
+    }
+    .footer__social a:hover {
+      border-color: var(--blue);
+      color: var(--blue-bright);
+      background: rgba(26, 111, 255, 0.1);
+    }
+    .footer__social svg { display: block; }
+    .footer__links {
+      display: flex;
+      gap: 2.5rem;
+      flex-wrap: wrap;
+    }
+    .footer__links h4 {
+      font-size: 0.7rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--grey);
+      margin-bottom: 0.75rem;
+    }
+    .footer__links ul { list-style: none; }
+    .footer__links a {
+      color: var(--white);
+      text-decoration: none;
+      font-size: 0.9rem;
+      display: block;
+      margin-bottom: 0.4rem;
+      opacity: 0.85;
+    }
+    .footer__links a:hover { color: var(--blue-bright); }
+    .footer__bottom {
+      padding-top: 1.5rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.06);
+      font-size: 0.8rem;
+      color: var(--grey);
+    }
+  </style>
+</head>
+<body>
+  <!-- Images attendues dans /images/ (qualité originale, noms à aligner sur vos fichiers) :
+       hero-1-belgaform-neon.jpg | hero-2.jpg | hero-3.jpg
+       activity-musculation.jpg | activity-judo.jpg | activity-boxe-mma.jpg
+       activity-cycling.jpg | activity-bodypump.jpg | activity-personal-training.jpg -->
+  <header class="nav">
+    <a href="#top" class="nav__brand">
+      <svg class="nav__logo" width="48" height="48" viewBox="0 0 120 120" aria-hidden="true">
+        <circle cx="60" cy="60" r="56" fill="none" stroke="#1a6fff" stroke-width="3"/>
+        <circle cx="60" cy="60" r="48" fill="none" stroke="rgba(255,255,255,0.15)" stroke-width="1"/>
+        <text fill="#f0f0f5" font-family="Bebas Neue, sans-serif" font-size="8" letter-spacing="1.2">
+          <textPath href="#badgePath" startOffset="50%" text-anchor="middle">BELGAFORM TRAINING CENTER</textPath>
+        </text>
+        <path id="badgePath" d="M 60 10 A 50 50 0 1 1 59.99 10" fill="none"/>
+        <path fill="#1a6fff" d="M60 38 L68 56 L88 56 L72 68 L78 88 L60 76 L42 88 L48 68 L32 56 L52 56 Z"/>
+      </svg>
+      <span class="nav__wordmark">BELG<span style="color:#1a6fff">★</span>FORM</span>
+    </a>
+    <nav aria-label="Principal">
+      <ul class="nav__links">
+        <li><a href="#activites">Activités</a></li>
+        <li><a href="#apropos">À propos</a></li>
+        <li><a href="#horaires">Horaires</a></li>
+        <li><a href="#tarifs">Tarifs</a></li>
+        <li><a href="#avis">Avis</a></li>
+      </ul>
+    </nav>
+    <a href="#contact" class="nav__cta clip-btn clip-btn--blue">S'inscrire</a>
+  </header>
+
+  <section class="hero" id="top" aria-label="Accueil">
+    <div class="hero__slides" id="heroSlides">
+      <div class="hero__slide is-active" style="background-image: url('images/hero-1-belgaform-neon.jpg');" role="img" aria-label="Salle Belgaform néon"></div>
+      <div class="hero__slide" style="background-image: url('images/hero-2.jpg');" role="img" aria-label="Salle de sport"></div>
+      <div class="hero__slide" style="background-image: url('images/hero-3.jpg');" role="img" aria-label="Espace training"></div>
+    </div>
+    <div class="hero__overlay"></div>
+    <div class="hero__content fade-up is-visible">
+      <p class="hero__badge">Training Center · Sala Al Jadida</p>
+      <h1>FORGE TON CORPS</h1>
+      <p class="hero__lead">
+        Équipements premium, coachs passionnés et une ambiance électrique au cœur de Sala Al Jadida. Rejoins la communauté Belgaform.
+      </p>
+      <div class="hero__actions">
+        <a href="#contact" class="clip-btn clip-btn--blue">Commencer maintenant</a>
+        <a href="#activites" class="clip-btn clip-btn--ghost">Découvrir</a>
+      </div>
+    </div>
+    <aside class="hero__stats" aria-label="Chiffres clés">
+      <div class="hero__stat">
+        <strong>187+</strong>
+        <span>Avis Google</span>
+      </div>
+      <div class="hero__stat">
+        <strong>3.8★</strong>
+        <span>Note</span>
+      </div>
+      <div class="hero__stat">
+        <strong>6+</strong>
+        <span>Activités</span>
+      </div>
+    </aside>
+  </section>
+
+  <section class="activities" id="activites">
+    <p class="section-label fade-up">Espaces & cours</p>
+    <h2 class="section-title fade-up">TES ACTIVITÉS</h2>
+    <div class="activities__grid">
+      <article class="act-card act-card--wide fade-up">
+        <div class="act-card__bg" style="background-image: url('images/activity-musculation.jpg');"></div>
+        <div class="act-card__shade"></div>
+        <div class="act-card__inner">
+          <span class="act-card__tag">Force</span>
+          <h3>MUSCULATION</h3>
+          <p class="act-card__desc">Machines guidées, poids libres et zone fonctionnelle pour progresser à ton rythme.</p>
+        </div>
+        <span class="act-card__arrow" aria-hidden="true">→</span>
+      </article>
+      <article class="act-card fade-up">
+        <div class="act-card__bg" style="background-image: url('images/activity-judo.jpg');"></div>
+        <div class="act-card__shade"></div>
+        <div class="act-card__inner">
+          <span class="act-card__tag">Arts martiaux</span>
+          <h3>JUDO & JIU-JITSU</h3>
+          <p class="act-card__desc">Tatami dédié, techniques et respect du code martial.</p>
+        </div>
+        <span class="act-card__arrow" aria-hidden="true">→</span>
+      </article>
+      <article class="act-card fade-up">
+        <div class="act-card__bg" style="background-image: url('images/activity-boxe-mma.jpg');"></div>
+        <div class="act-card__shade"></div>
+        <div class="act-card__inner">
+          <span class="act-card__tag">Combat</span>
+          <h3>BOXE & MMA</h3>
+          <p class="act-card__desc">Ring, sacs et cage pour décharger et performer.</p>
+        </div>
+        <span class="act-card__arrow" aria-hidden="true">→</span>
+      </article>
+      <article class="act-card fade-up">
+        <div class="act-card__bg" style="background-image: url('images/activity-cycling.jpg');"></div>
+        <div class="act-card__shade"></div>
+        <div class="act-card__inner">
+          <span class="act-card__tag">Cardio</span>
+          <h3>CYCLING</h3>
+          <p class="act-card__desc">Salle immersive, rythme et motivation collective.</p>
+        </div>
+        <span class="act-card__arrow" aria-hidden="true">→</span>
+      </article>
+      <article class="act-card fade-up">
+        <div class="act-card__bg" style="background-image: url('images/activity-bodypump.jpg');"></div>
+        <div class="act-card__shade"></div>
+        <div class="act-card__inner">
+          <span class="act-card__tag">Cours collectifs</span>
+          <h3>BODY PUMP</h3>
+          <p class="act-card__desc">Renforcement global avec barres et disques.</p>
+        </div>
+        <span class="act-card__arrow" aria-hidden="true">→</span>
+      </article>
+      <article class="act-card fade-up">
+        <div class="act-card__bg" style="background-image: url('images/activity-personal-training.jpg');"></div>
+        <div class="act-card__shade"></div>
+        <div class="act-card__inner">
+          <span class="act-card__tag">Sur mesure</span>
+          <h3>PERSONAL TRAINING</h3>
+          <p class="act-card__desc">Programme individualisé avec un coach dédié.</p>
+        </div>
+        <span class="act-card__arrow" aria-hidden="true">→</span>
+      </article>
+    </div>
+  </section>
+
+  <section class="about" id="apropos">
+    <div class="about__visual fade-up">
+      <svg class="about__watermark" viewBox="0 0 120 120" aria-hidden="true">
+        <circle cx="60" cy="60" r="56" fill="none" stroke="#1a6fff" stroke-width="2"/>
+        <path fill="#1a6fff" opacity="0.5" d="M60 38 L68 56 L88 56 L72 68 L78 88 L60 76 L42 88 L48 68 L32 56 L52 56 Z"/>
+      </svg>
+      <div class="about__stats">
+        <div class="stat-glass">
+          <div class="num" data-target="10">0</div>
+          <div class="lbl">ans d'expérience</div>
+        </div>
+        <div class="stat-glass">
+          <div class="num" data-target="500">0</div>
+          <div class="lbl">membres</div>
+        </div>
+        <div class="stat-glass">
+          <div class="num" data-target="15">0</div>
+          <div class="lbl">coachs</div>
+        </div>
+        <div class="stat-glass">
+          <div class="num" data-target="6">0</div>
+          <div class="lbl">disciplines</div>
+        </div>
+      </div>
+    </div>
+    <div class="about__text fade-up">
+      <p class="section-label">Notre histoire</p>
+      <h2 class="section-title">BIEN PLUS QU'UNE SALLE</h2>
+      <p>
+        Belgaform Training Center, c'est un lieu où la performance rencontre l'accueil. Depuis plus de dix ans sur l'avenue Moulay Youssef, nous accompagnons débutants et athlètes avec des espaces dédiés — musculation, arts martiaux, cycling et coaching personnalisé.
+      </p>
+      <p>
+        Notre équipe met l'humain au centre : suivi, conseils et ambiance motivante pour que chaque séance compte.
+      </p>
+      <ul class="about__list">
+        <li>Installations modernes et salles thématiques</li>
+        <li>Coachs certifiés et présents sur le plateau</li>
+        <li>Cours collectifs et créneaux étendus en semaine</li>
+        <li>Adresse centrale à Sala Al Jadida</li>
+      </ul>
+      <a href="#tarifs" class="clip-btn clip-btn--blue">Voir les formules</a>
+    </div>
+  </section>
+
+  <section class="schedule" id="horaires">
+    <p class="section-label fade-up">Planning</p>
+    <h2 class="section-title fade-up">HORAIRES D'OUVERTURE</h2>
+    <p class="fade-up" style="color: var(--grey); max-width: 560px;">
+      Horaires affichés à titre indicatif — le club ouvre à partir de 9h en semaine (conformément aux informations Google).
+    </p>
+    <div class="schedule__grid" id="scheduleGrid" role="list"></div>
+  </section>
+
+  <section class="pricing" id="tarifs">
+    <div class="section-head--center fade-up">
+      <p class="section-label">Abonnements</p>
+      <h2 class="section-title">TARIFS</h2>
+    </div>
+    <div class="pricing__wrap">
+      <div class="price-card fade-up">
+        <h3 class="price-card__name">Mensuel</h3>
+        <p class="price-card__amt">250 <small>MAD / mois</small></p>
+        <ul>
+          <li>Accès illimité à la salle</li>
+          <li>Tous les espaces musculation & cardio</li>
+          <li>Vestiaires & douches</li>
+          <li>Sans engagement au-delà du mois</li>
+        </ul>
+      </div>
+      <div class="price-card price-card--featured fade-up">
+        <span class="price-card__badge">Le plus choisi</span>
+        <h3 class="price-card__name">Trimestriel</h3>
+        <p class="price-card__amt">650 <small>MAD / trimestre</small></p>
+        <ul>
+          <li>Tout le pack mensuel</li>
+          <li>Économie vs mensuel</li>
+          <li>Accès cours collectifs sélectionnés</li>
+          <li>1 bilan forme avec un coach</li>
+        </ul>
+      </div>
+      <div class="price-card fade-up">
+        <h3 class="price-card__name">Annuel</h3>
+        <p class="price-card__amt">2000 <small>MAD / an</small></p>
+        <ul>
+          <li>Meilleur tarif à l'année</li>
+          <li>Accès complet 12 mois</li>
+          <li>Invitations événements membres</li>
+          <li>Priorité sur les nouveaux cours</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="reviews" id="avis">
+    <div class="reviews__header fade-up">
+      <div>
+        <p class="section-label" style="margin-bottom: 0.5rem;">Google</p>
+        <h2 class="section-title" style="margin-bottom: 0;">AVIS CLIENTS</h2>
+      </div>
+      <p class="reviews__overall">
+        <strong>3.8/5</strong> · 187 avis
+      </p>
+    </div>
+    <div class="reviews__grid">
+      <article class="review-card fade-up">
+        <p class="review-card__stars">★★★★★</p>
+        <p class="review-card__meta"><strong>move master</strong> · il y a 5 mois</p>
+        <p>Super expérience, les coachs sont au top et très à l'écoute. Mention spéciale au commercial Youssef pour son professionnalisme et sa gentillesse. Je recommande vivement Belgaform.</p>
+      </article>
+      <article class="review-card fade-up">
+        <p class="review-card__stars">★★★★★</p>
+        <p class="review-card__meta"><strong>LINA LINA</strong> · il y a 4 mois</p>
+        <p>Accueil chaleureux dès l'arrivée, équipe motivante et coachs qui savent pousser sans brusquer. Ambiance familiale, on se sent bien pour s'entraîner sérieusement.</p>
+      </article>
+      <article class="review-card fade-up">
+        <p class="review-card__stars">★★★☆☆</p>
+        <p class="review-card__meta"><strong>Ghita Ben</strong> · il y a 6 mois</p>
+        <p>La salle peut convenir pour un entraînement basique ; le matériel reste correct sans être exceptionnel. Quelques points d'hygiène pourraient être améliorés. Bon pour débuter ou maintenir la forme.</p>
+      </article>
+    </div>
+  </section>
+
+  <section class="contact" id="contact">
+    <div class="contact__info fade-up">
+      <p class="section-label">Coordonnées</p>
+      <h2 class="section-title">CONTACT</h2>
+      <div class="contact__row">
+        <strong>Téléphone</strong>
+        <a href="tel:+0537533953">05 37 53 39 53</a>
+      </div>
+      <div class="contact__row">
+        <strong>Adresse</strong>
+        Av. Moulay Youssef, Sala Al Jadida, Maroc<br />
+        <span style="color: var(--grey); font-size: 0.9rem;">Plus code : X7X5+MQ</span>
+      </div>
+      <div class="contact__row">
+        <strong>Réseaux</strong>
+        <span style="color: var(--grey);">Instagram · Facebook · WhatsApp — liens en bas de page</span>
+      </div>
+    </div>
+    <div class="contact__map fade-up" aria-label="Carte">
+      <div class="contact__map-grid"></div>
+      <div class="contact__pin-wrap">
+        <div class="contact__pin"></div>
+      </div>
+      <div class="contact__map-link">
+        <a href="https://www.google.com/maps/search/?api=1&query=X7X5%2BMQ+Av.+Moulay+Youssef+Sal%C3%A9+Al+Jadida+Maroc" target="_blank" rel="noopener noreferrer">Voir sur Google Maps</a>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="footer__top">
+      <div class="footer__brand">
+        <a href="#top" class="nav__brand" style="margin-bottom: 0.5rem;">
+          <svg width="44" height="44" viewBox="0 0 120 120" aria-hidden="true">
+            <circle cx="60" cy="60" r="56" fill="none" stroke="#1a6fff" stroke-width="3"/>
+            <path fill="#1a6fff" d="M60 38 L68 56 L88 56 L72 68 L78 88 L60 76 L42 88 L48 68 L32 56 L52 56 Z"/>
+          </svg>
+          <span class="nav__wordmark">BELG<span style="color:#1a6fff">★</span>FORM</span>
+        </a>
+        <p class="footer__tagline">Training Center — Forge ton corps à Sala Al Jadida. Musculation, combat, cycling et coaching.</p>
+        <div class="footer__social">
+          <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.67-.072-4.949-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+          </a>
+          <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+          </a>
+          <a href="https://wa.me/212537533953" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.435 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          </a>
+        </div>
+      </div>
+      <div class="footer__links">
+        <div>
+          <h4>Navigation</h4>
+          <ul>
+            <li><a href="#activites">Activités</a></li>
+            <li><a href="#tarifs">Tarifs</a></li>
+            <li><a href="#horaires">Horaires</a></li>
+            <li><a href="#contact">Contact</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <p class="footer__bottom">© <span id="year"></span> Belgaform Training Center. Tous droits réservés.</p>
+  </footer>
+
+  <script>
+    (function () {
+      var slides = document.querySelectorAll(".hero__slide");
+      var i = 0;
+      function next() {
+        slides[i].classList.remove("is-active");
+        i = (i + 1) % slides.length;
+        slides[i].classList.add("is-active");
+      }
+      setInterval(next, 5000);
+
+      var scheduleGrid = document.getElementById("scheduleGrid");
+      var days = [
+        { short: "Lun", full: "Lundi", hours: "09:00 – 22:00" },
+        { short: "Mar", full: "Mardi", hours: "09:00 – 22:00" },
+        { short: "Mer", full: "Mercredi", hours: "09:00 – 22:00" },
+        { short: "Jeu", full: "Jeudi", hours: "09:00 – 22:00" },
+        { short: "Ven", full: "Vendredi", hours: "09:00 – 22:00" },
+        { short: "Sam", full: "Samedi", hours: "09:00 – 20:00" },
+        { short: "Dim", full: "Dimanche", hours: "Fermé", closed: true }
+      ];
+      var today = new Date().getDay();
+      var mapJs = [1, 2, 3, 4, 5, 6, 0];
+      days.forEach(function (d, idx) {
+        var el = document.createElement("div");
+        el.className = "schedule__day";
+        el.setAttribute("role", "listitem");
+        if (mapJs[idx] === today) el.classList.add("is-today");
+        el.innerHTML =
+          '<div class="schedule__day-name">' +
+          d.short +
+          '</div><div class="schedule__hours' +
+          (d.closed ? " closed" : "") +
+          '">' +
+          d.hours +
+          "</div>";
+        scheduleGrid.appendChild(el);
+      });
+
+      document.getElementById("year").textContent = new Date().getFullYear();
+
+      var fadeEls = document.querySelectorAll(".fade-up");
+      var obs = new IntersectionObserver(
+        function (entries) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting) entry.target.classList.add("is-visible");
+          });
+        },
+        { threshold: 0.12, rootMargin: "0px 0px -40px 0px" }
+      );
+      fadeEls.forEach(function (el) {
+        obs.observe(el);
+      });
+
+      var counted = false;
+      var statObs = new IntersectionObserver(
+        function (entries) {
+          entries.forEach(function (entry) {
+            if (!entry.isIntersecting || counted) return;
+            counted = true;
+            document.querySelectorAll(".stat-glass .num").forEach(function (node) {
+              var target = parseInt(node.getAttribute("data-target"), 10);
+              var dur = 1400;
+              var start = null;
+              function tick(ts) {
+                if (!start) start = ts;
+                var p = Math.min((ts - start) / dur, 1);
+                var eased = 1 - Math.pow(1 - p, 3);
+                var val = Math.round(eased * target);
+                node.textContent = p < 1 ? String(val) : val + "+";
+                if (p < 1) requestAnimationFrame(tick);
+              }
+              requestAnimationFrame(tick);
+            });
+          });
+        },
+        { threshold: 0.35 }
+      );
+      var aboutStats = document.querySelector(".about__stats");
+      if (aboutStats) statObs.observe(aboutStats.parentElement || aboutStats);
+    })();
+  </script>
+</body>
+</html>
