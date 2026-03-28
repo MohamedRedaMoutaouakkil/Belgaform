@@ -3,1191 +3,1316 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Belgaform Training Center — Sala Al Jadida</title>
+  <title>Art Y Chaud DELICES — Traiteur &amp; Pâtissier · Témara</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700&family=Bebas+Neue&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,300;0,400;0,700;1,400&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet" />
   <style>
     :root {
-      --black: #050507;
-      --dark: #0d0d12;
-      --card: #111118;
-      --blue: #1a6fff;
-      --blue-bright: #3d8dff;
-      --white: #f0f0f5;
-      --grey: #888899;
-      --nav-h: 72px;
+      --bg: #fdf9f4;
+      --text: #2c1a0e;
+      --header-bg: #1a0f00;
+      --header-bg-scrolled: rgba(26, 15, 0, 0.97);
+      --gold: #d4af37;
+      --gold-soft: #e8c85c;
+      --cream: #f5e6c8;
+      --white: #ffffff;
+      --shadow: 0 12px 40px rgba(44, 26, 14, 0.08);
+      --radius: 12px;
+      --space-xs: 0.5rem;
+      --space-sm: 1rem;
+      --space-md: 1.5rem;
+      --space-lg: 2.5rem;
+      --space-xl: 4rem;
+      --nav-h: 76px;
+      --wa: #25d366;
+      --transition: 0.3s ease;
     }
 
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     html { scroll-behavior: smooth; }
     body {
-      font-family: "Barlow", system-ui, sans-serif;
-      background: var(--black);
-      color: var(--white);
-      line-height: 1.55;
-      overflow-x: hidden;
+      font-family: "Lato", system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      min-height: 100vh;
+      padding-top: var(--nav-h);
     }
-
     img { max-width: 100%; height: auto; display: block; }
+    a { color: inherit; }
 
-    .clip-btn {
-      clip-path: polygon(0 0, calc(100% - 14px) 0, 100% 14px, 100% 100%, 14px 100%, 0 calc(100% - 14px));
-      border: none;
-      cursor: pointer;
-      font-family: inherit;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.06em;
-      font-size: 0.85rem;
-      padding: 0.9rem 1.6rem;
-      transition: transform 0.2s, box-shadow 0.2s, background 0.2s, color 0.2s;
-    }
-    .clip-btn:hover { transform: translateY(-2px); }
-    .clip-btn--blue {
-      background: linear-gradient(135deg, var(--blue), #155fcc);
-      color: var(--white);
-      box-shadow: 0 8px 32px rgba(26, 111, 255, 0.35);
-    }
-    .clip-btn--blue:hover { box-shadow: 0 12px 40px rgba(26, 111, 255, 0.5); }
-    .clip-btn--ghost {
-      background: transparent;
-      color: var(--white);
-      border: 1px solid rgba(255, 255, 255, 0.2);
-    }
-    .clip-btn--ghost:hover {
-      border-color: var(--blue);
-      color: var(--blue-bright);
+    .u-sr-only {
+      position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+      overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0;
     }
 
-    .section-label {
-      display: inline-flex;
+    /* ----- Nav ----- */
+    .header {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 1000;
+      height: var(--nav-h);
+      background: var(--header-bg);
+      transition: background var(--transition), box-shadow var(--transition);
+    }
+    .header.is-scrolled {
+      background: var(--header-bg-scrolled);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 8px 32px rgba(0,0,0,0.35);
+    }
+    .header__inner {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 var(--space-md);
+      height: 100%;
+      display: flex;
       align-items: center;
-      gap: 0.75rem;
-      font-size: 0.72rem;
-      font-weight: 600;
-      letter-spacing: 0.22em;
-      text-transform: uppercase;
-      color: var(--grey);
-      margin-bottom: 0.75rem;
+      justify-content: space-between;
+      gap: var(--space-md);
     }
-    .section-label::before {
+    .logo {
+      font-family: "Playfair Display", Georgia, serif;
+      font-size: clamp(1rem, 2.5vw, 1.35rem);
+      font-weight: 700;
+      color: var(--gold);
+      text-decoration: none;
+      letter-spacing: 0.02em;
+      white-space: nowrap;
+    }
+    .logo span { font-weight: 400; opacity: 0.9; }
+    .nav__toggle {
+      display: none;
+      background: none;
+      border: 1px solid rgba(212, 175, 55, 0.4);
+      color: var(--gold);
+      width: 44px; height: 44px;
+      border-radius: 8px;
+      cursor: pointer;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .nav__toggle span {
+      display: block; width: 22px; height: 2px; background: var(--gold);
+      transition: transform var(--transition), opacity var(--transition);
+    }
+    .nav__toggle[aria-expanded="true"] span:nth-child(1) {
+      transform: translateY(8px) rotate(45deg);
+    }
+    .nav__toggle[aria-expanded="true"] span:nth-child(2) { opacity: 0; }
+    .nav__toggle[aria-expanded="true"] span:nth-child(3) {
+      transform: translateY(-8px) rotate(-45deg);
+    }
+    .nav__list {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 0.25rem 1.25rem;
+      list-style: none;
+    }
+    .nav__list a {
+      color: var(--gold-soft);
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 500;
+      position: relative;
+      padding: 0.25rem 0;
+    }
+    .nav__list a::after {
       content: "";
-      width: 32px;
-      height: 2px;
-      background: var(--blue);
+      position: absolute; left: 0; bottom: 0; width: 0; height: 1px;
+      background: var(--gold);
+      transition: width 0.25s ease;
+    }
+    .nav__list a:hover::after,
+    .nav__list a:focus-visible::after { width: 100%; }
+    .nav__list a.is-active { color: var(--gold); }
+    @media (max-width: 900px) {
+      .nav__toggle { display: flex; }
+      .nav__panel {
+        position: fixed;
+        top: var(--nav-h);
+        left: 0; right: 0;
+        background: var(--header-bg);
+        border-top: 1px solid rgba(212, 175, 55, 0.15);
+        padding: var(--space-md);
+        max-height: 0;
+        overflow: hidden;
+        opacity: 0;
+        transition: max-height 0.35s ease, opacity 0.25s ease;
+      }
+      .nav__panel.is-open {
+        max-height: 420px;
+        opacity: 1;
+      }
+      .nav__list {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: var(--space-sm);
+      }
+    }
+    @media (min-width: 901px) {
+      .nav__panel { display: block !important; max-height: none !important; opacity: 1 !important; }
     }
 
-    .section-title {
-      font-family: "Bebas Neue", Impact, sans-serif;
-      font-size: clamp(2.25rem, 5vw, 3.75rem);
-      letter-spacing: 0.04em;
-      line-height: 1.05;
-      margin-bottom: 1rem;
+    /* ----- SPA pages ----- */
+    .spa-pages { position: relative; min-height: calc(100vh - var(--nav-h)); }
+    .spa-page {
+      display: none;
+      animation: pageFade 0.35s ease forwards;
+    }
+    .spa-page.is-active { display: block; }
+    @keyframes pageFade {
+      from { opacity: 0; transform: translateY(14px); }
+      to { opacity: 1; transform: translateY(0); }
     }
 
-    /* Fade up */
-    .fade-up {
+    /* ----- Reveal ----- */
+    .reveal {
       opacity: 0;
-      transform: translateY(28px);
-      transition: opacity 0.7s ease, transform 0.7s ease;
+      transform: translateY(24px);
+      transition: opacity 0.65s ease, transform 0.65s ease;
     }
-    .fade-up.is-visible {
+    .reveal.is-in {
       opacity: 1;
       transform: translateY(0);
     }
 
-    /* ----- NAV ----- */
-    .nav {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      z-index: 1000;
-      height: var(--nav-h);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 0 clamp(1rem, 4vw, 3rem);
-      background: rgba(5, 5, 7, 0.55);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
-      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
-    }
-    .nav__brand {
-      display: flex;
-      align-items: center;
-      gap: 0.65rem;
-      text-decoration: none;
-      color: var(--white);
-    }
-    .nav__wordmark {
-      font-family: "Bebas Neue", sans-serif;
-      font-size: 1.35rem;
-      letter-spacing: 0.12em;
-    }
-    .nav__links {
-      display: flex;
-      align-items: center;
-      gap: 1.75rem;
-      list-style: none;
-    }
-    .nav__links a {
-      color: var(--grey);
-      text-decoration: none;
-      font-size: 0.9rem;
-      font-weight: 500;
-      transition: color 0.2s;
-    }
-    .nav__links a:hover { color: var(--white); }
-    .nav__cta.clip-btn { padding: 0.65rem 1.25rem; font-size: 0.8rem; }
-
-    @media (max-width: 900px) {
-      .nav__links { display: none; }
-    }
-
-    /* ----- HERO ----- */
+    /* ----- Home hero ----- */
     .hero {
       position: relative;
-      min-height: 100vh;
-      min-height: 100dvh;
+      min-height: calc(100vh - var(--nav-h));
       display: flex;
-      flex-direction: column;
-      justify-content: flex-end;
-      padding: calc(var(--nav-h) + 2rem) clamp(1rem, 4vw, 3rem) 2rem;
+      align-items: center;
+      padding: var(--space-xl) var(--space-md);
+      overflow: hidden;
     }
-    .hero__slides {
+    .hero__bg {
       position: absolute;
       inset: 0;
+      background:
+        radial-gradient(ellipse 120% 80% at 20% 20%, rgba(245, 230, 200, 0.85) 0%, transparent 55%),
+        radial-gradient(ellipse 100% 70% at 80% 60%, rgba(253, 249, 244, 0.9) 0%, transparent 50%),
+        linear-gradient(135deg, var(--bg) 0%, var(--cream) 50%, #f8efe0 100%);
       z-index: 0;
     }
-    .hero__slide {
+    .hero__photo {
       position: absolute;
       inset: 0;
-      background-size: cover;
-      background-position: center;
-      background-repeat: no-repeat;
-      opacity: 0;
-      transition: opacity 1.2s ease-in-out;
-    }
-    .hero__slide.is-active { opacity: 1; }
-    .hero__overlay {
-      position: absolute;
-      inset: 0;
-      z-index: 1;
-      background: linear-gradient(
-        to top,
-        rgba(5, 5, 7, 0.95) 0%,
-        rgba(5, 5, 7, 0.5) 45%,
-        rgba(5, 5, 7, 0.35) 100%
-      );
-      pointer-events: none;
+      background: url("assets/art-brand-hero.png") center / cover no-repeat;
+      opacity: 0.22;
+      mix-blend-mode: multiply;
     }
     .hero__content {
       position: relative;
-      z-index: 2;
-      max-width: 900px;
-    }
-    .hero__badge {
-      display: inline-block;
-      padding: 0.4rem 0.9rem;
-      border: 1px solid rgba(26, 111, 255, 0.45);
-      background: rgba(26, 111, 255, 0.12);
-      font-size: 0.75rem;
-      font-weight: 600;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      color: var(--blue-bright);
-      margin-bottom: 1.25rem;
-      animation: heroBadge 4s ease-in-out infinite;
-    }
-    @keyframes heroBadge {
-      0%, 100% { opacity: 1; transform: translateY(0); }
-      50% { opacity: 0.85; transform: translateY(-4px); }
+      z-index: 1;
+      max-width: 720px;
     }
     .hero h1 {
-      font-family: "Bebas Neue", sans-serif;
-      font-size: clamp(3.5rem, 12vw, 7.5rem);
-      line-height: 0.95;
-      letter-spacing: 0.02em;
-      margin-bottom: 1rem;
+      font-family: "Playfair Display", Georgia, serif;
+      font-size: clamp(2.25rem, 6vw, 3.75rem);
+      font-weight: 700;
+      color: var(--text);
+      line-height: 1.15;
+      margin-bottom: var(--space-md);
     }
-    .hero__lead {
+    .hero__sub {
       font-size: 1.1rem;
-      color: var(--grey);
+      color: rgba(44, 26, 14, 0.78);
+      margin-bottom: var(--space-lg);
       max-width: 520px;
-      margin-bottom: 1.75rem;
     }
-    .hero__actions {
+    .hero__cta {
       display: flex;
       flex-wrap: wrap;
-      gap: 1rem;
-      margin-bottom: 2rem;
+      gap: var(--space-sm);
     }
-    .hero__stats {
-      position: absolute;
-      z-index: 2;
-      right: clamp(1rem, 4vw, 3rem);
-      bottom: 2rem;
-      display: flex;
-      gap: 1.5rem;
-      padding: 1rem 1.25rem;
-      background: rgba(17, 17, 24, 0.75);
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      backdrop-filter: blur(10px);
-    }
-    .hero__stat {
-      text-align: center;
-    }
-    .hero__stat strong {
-      display: block;
-      font-family: "Bebas Neue", sans-serif;
-      font-size: 1.35rem;
-      color: var(--white);
-      letter-spacing: 0.06em;
-    }
-    .hero__stat span {
-      font-size: 0.72rem;
-      color: var(--grey);
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-    }
-    @media (max-width: 900px) {
-      .hero__stats { display: none; }
-      .hero { padding-bottom: 3rem; }
-    }
-
-    /* ----- ACTIVITIES ----- */
-    .activities {
-      padding: 5rem clamp(1rem, 4vw, 3rem);
-      background: var(--dark);
-    }
-    .activities__grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 1rem;
-      margin-top: 2.5rem;
-    }
-    .act-card {
-      position: relative;
-      min-height: 280px;
-      border: 1px solid rgba(255, 255, 255, 0.07);
-      overflow: hidden;
-      cursor: pointer;
-      transition: border-color 0.35s, box-shadow 0.35s;
-    }
-    .act-card:hover {
-      border-color: rgba(26, 111, 255, 0.55);
-      box-shadow: 0 0 32px rgba(26, 111, 255, 0.15);
-    }
-    .act-card--wide { grid-column: span 2; min-height: 320px; }
-    .act-card__bg {
-      position: absolute;
-      inset: 0;
-      background-size: cover;
-      background-position: center;
-      transition: transform 0.6s ease;
-    }
-    .act-card:hover .act-card__bg { transform: scale(1.05); }
-    .act-card__shade {
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(to top, rgba(5, 5, 7, 0.92) 0%, transparent 55%);
-    }
-    .act-card__inner {
-      position: absolute;
-      inset: 0;
-      padding: 1.25rem;
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-end;
-      z-index: 2;
-    }
-    .act-card__tag {
-      font-size: 0.65rem;
-      font-weight: 700;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: var(--blue-bright);
-      margin-bottom: 0.35rem;
-    }
-    .act-card h3 {
-      font-family: "Bebas Neue", sans-serif;
-      font-size: 1.85rem;
-      letter-spacing: 0.06em;
-    }
-    .act-card__desc {
-      max-height: 0;
-      opacity: 0;
-      overflow: hidden;
-      font-size: 0.88rem;
-      color: var(--grey);
-      margin-top: 0.5rem;
-      transition: max-height 0.45s ease, opacity 0.35s ease;
-    }
-    .act-card:hover .act-card__desc {
-      max-height: 120px;
-      opacity: 1;
-    }
-    .act-card__arrow {
-      position: absolute;
-      top: 1.25rem;
-      right: 1.25rem;
-      width: 40px;
-      height: 40px;
-      border: 1px solid rgba(255, 255, 255, 0.15);
-      display: flex;
+    .btn {
+      display: inline-flex;
       align-items: center;
       justify-content: center;
-      color: var(--white);
-      transition: background 0.25s, border-color 0.25s, color 0.25s;
-    }
-    .act-card:hover .act-card__arrow {
-      background: var(--blue);
-      border-color: var(--blue);
-    }
-    @media (max-width: 900px) {
-      .activities__grid {
-        grid-template-columns: repeat(2, 1fr);
-      }
-      .act-card--wide { grid-column: span 2; }
-    }
-    @media (max-width: 520px) {
-      .activities__grid { grid-template-columns: 1fr; }
-      .act-card--wide { grid-column: span 1; }
-    }
-
-    /* ----- ABOUT ----- */
-    .about {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      min-height: 560px;
-    }
-    .about__visual {
-      position: relative;
-      background: var(--black);
-      padding: 3rem 2rem;
-      overflow: hidden;
-    }
-    .about__visual::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background-image:
-        linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
-      background-size: 24px 24px;
-      opacity: 0.5;
-      pointer-events: none;
-    }
-    .about__watermark {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      width: min(90%, 380px);
-      opacity: 0.12;
-      pointer-events: none;
-    }
-    .about__stats {
-      position: relative;
-      z-index: 2;
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 1rem;
-      margin-top: auto;
-      padding-top: 8rem;
-    }
-    .stat-glass {
-      padding: 1.25rem;
-      background: rgba(17, 17, 24, 0.65);
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      backdrop-filter: blur(8px);
-      text-align: center;
-    }
-    .stat-glass .num {
-      font-family: "Bebas Neue", sans-serif;
-      font-size: 2.5rem;
-      color: var(--blue-bright);
-      line-height: 1;
-    }
-    .stat-glass .lbl {
-      font-size: 0.75rem;
-      color: var(--grey);
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      margin-top: 0.35rem;
-    }
-    .about__text {
-      background: var(--card);
-      padding: clamp(2rem, 5vw, 4rem);
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      border-left: 1px solid rgba(255, 255, 255, 0.06);
-    }
-    .about__text p { color: var(--grey); margin-bottom: 1.25rem; }
-    .about__list {
-      list-style: none;
-      margin: 1.5rem 0 2rem;
-    }
-    .about__list li {
-      position: relative;
-      padding-left: 1.5rem;
-      margin-bottom: 0.65rem;
-      color: var(--white);
-    }
-    .about__list li::before {
-      content: "";
-      position: absolute;
-      left: 0;
-      top: 0.45em;
-      width: 8px;
-      height: 8px;
-      background: var(--blue);
-      transform: rotate(45deg);
-    }
-    @media (max-width: 900px) {
-      .about { grid-template-columns: 1fr; }
-      .about__text { border-left: none; border-top: 1px solid rgba(255, 255, 255, 0.06); }
-    }
-
-    /* ----- SCHEDULE ----- */
-    .schedule {
-      padding: 5rem clamp(1rem, 4vw, 3rem);
-      background: var(--black);
-    }
-    .schedule__grid {
-      display: grid;
-      grid-template-columns: repeat(7, 1fr);
-      gap: 0.75rem;
-      margin-top: 2.5rem;
-    }
-    .schedule__day {
-      padding: 1.25rem 0.75rem;
-      background: var(--card);
-      border: 1px solid rgba(255, 255, 255, 0.07);
-      text-align: center;
-      transition: border-color 0.25s, box-shadow 0.25s;
-    }
-    .schedule__day.is-today {
-      border-color: var(--blue);
-      box-shadow: 0 0 24px rgba(26, 111, 255, 0.2);
-    }
-    .schedule__day-name {
-      font-family: "Bebas Neue", sans-serif;
-      font-size: 1.25rem;
-      letter-spacing: 0.08em;
-      margin-bottom: 0.5rem;
-    }
-    .schedule__hours {
-      font-size: 0.85rem;
-      color: var(--grey);
-    }
-    .schedule__hours.closed { color: #c44; font-weight: 600; }
-    @media (max-width: 900px) {
-      .schedule__grid {
-        grid-template-columns: repeat(2, 1fr);
-      }
-    }
-
-    /* ----- PRICING ----- */
-    .pricing {
-      padding: 5rem clamp(1rem, 4vw, 3rem);
-      background: var(--dark);
-      text-align: center;
-    }
-    .section-head--center {
-      text-align: center;
-      max-width: 640px;
-      margin-left: auto;
-      margin-right: auto;
-    }
-    .section-head--center .section-label {
-      justify-content: center;
-    }
-    .section-head--center .section-label::before,
-    .section-head--center .section-label::after {
-      content: "";
-      width: 32px;
-      height: 2px;
-      background: var(--blue);
-    }
-    .pricing__wrap {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      align-items: stretch;
-      gap: 1.5rem;
-      margin-top: 3rem;
-    }
-    .price-card {
-      flex: 1 1 260px;
-      max-width: 320px;
-      padding: 2rem 1.75rem;
-      background: var(--card);
-      border: 1px solid rgba(255, 255, 255, 0.07);
-      text-align: left;
-      transition: border-color 0.3s, transform 0.3s, box-shadow 0.3s;
-    }
-    .price-card:hover {
-      border-color: rgba(26, 111, 255, 0.4);
-      box-shadow: 0 0 28px rgba(26, 111, 255, 0.12);
-    }
-    .price-card--featured {
-      transform: scale(1.05);
-      border-color: var(--blue);
-      box-shadow: 0 16px 48px rgba(26, 111, 255, 0.25);
-      z-index: 1;
-    }
-    .price-card__name {
-      font-family: "Bebas Neue", sans-serif;
-      font-size: 1.75rem;
-      letter-spacing: 0.06em;
-    }
-    .price-card__amt {
-      font-size: 2.25rem;
-      font-weight: 700;
-      color: var(--blue-bright);
-      margin: 0.5rem 0 1.25rem;
-    }
-    .price-card__amt small { font-size: 1rem; font-weight: 500; color: var(--grey); }
-    .price-card ul { list-style: none; }
-    .price-card li {
-      display: flex;
-      align-items: flex-start;
-      gap: 0.5rem;
+      padding: 0.85rem 1.75rem;
+      font-family: inherit;
       font-size: 0.9rem;
-      color: var(--grey);
-      margin-bottom: 0.65rem;
-    }
-    .price-card li::before {
-      content: "✓";
-      color: var(--blue);
       font-weight: 700;
-      flex-shrink: 0;
+      text-decoration: none;
+      border-radius: 999px;
+      cursor: pointer;
+      border: 2px solid transparent;
+      transition: transform 0.2s, box-shadow 0.2s, background 0.2s, color 0.2s;
     }
-    .price-card__badge {
-      display: inline-block;
-      font-size: 0.65rem;
-      font-weight: 700;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      color: var(--blue-bright);
-      margin-bottom: 0.5rem;
+    .btn:hover { transform: translateY(-2px); }
+    .btn--gold {
+      background: var(--gold);
+      color: var(--header-bg);
+      box-shadow: 0 8px 24px rgba(212, 175, 55, 0.35);
     }
-    @media (max-width: 900px) {
-      .price-card--featured { transform: none; }
-      .pricing__wrap { flex-direction: column; align-items: center; }
-      .price-card { max-width: 400px; width: 100%; }
+    .btn--gold:hover { background: var(--gold-soft); }
+    .btn--outline {
+      background: transparent;
+      border-color: var(--text);
+      color: var(--text);
+    }
+    .btn--outline:hover {
+      border-color: var(--gold);
+      color: var(--gold);
+    }
+    .btn--wa {
+      background: var(--wa);
+      color: var(--white);
+      border: none;
+    }
+    .btn--wa:hover { filter: brightness(1.05); }
+
+    .hero-load .hero h1,
+    .hero-load .hero__sub,
+    .hero-load .hero__cta { opacity: 0; animation: heroUp 0.8s ease forwards; }
+    .hero-load .hero h1 { animation-delay: 0.1s; }
+    .hero-load .hero__sub { animation-delay: 0.25s; }
+    .hero-load .hero__cta { animation-delay: 0.4s; }
+    @keyframes heroUp {
+      from { opacity: 0; transform: translateY(28px); }
+      to { opacity: 1; transform: translateY(0); }
     }
 
-    /* ----- REVIEWS ----- */
-    .reviews {
-      padding: 5rem clamp(1rem, 4vw, 3rem);
-      background: var(--black);
+    .section {
+      padding: var(--space-xl) var(--space-md);
+      max-width: 1280px;
+      margin: 0 auto;
     }
-    .reviews__header {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: baseline;
-      justify-content: space-between;
-      gap: 1rem;
-      margin-bottom: 2rem;
+    .section__title {
+      font-family: "Playfair Display", Georgia, serif;
+      font-size: clamp(1.75rem, 4vw, 2.5rem);
+      margin-bottom: var(--space-sm);
+      color: var(--text);
     }
-    .reviews__overall {
-      font-size: 1rem;
-      color: var(--grey);
-    }
-    .reviews__overall strong {
-      color: var(--white);
-      font-size: 1.5rem;
-      font-family: "Bebas Neue", sans-serif;
-    }
-    .reviews__grid {
+    .section__lead { color: rgba(44, 26, 14, 0.75); max-width: 640px; margin-bottom: var(--space-lg); }
+
+    .features {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 1.25rem;
+      gap: var(--space-md);
     }
-    .review-card {
-      padding: 1.5rem;
-      background: var(--card);
-      border: 1px solid rgba(255, 255, 255, 0.07);
-      transition: border-color 0.25s;
+    @media (max-width: 768px) { .features { grid-template-columns: 1fr; } }
+    .feature-card {
+      background: var(--white);
+      border-radius: var(--radius);
+      padding: var(--space-lg);
+      box-shadow: var(--shadow);
+      text-align: center;
+      border: 1px solid rgba(44, 26, 14, 0.06);
     }
-    .review-card:hover { border-color: rgba(26, 111, 255, 0.35); }
-    .review-card__stars { color: #f5a623; letter-spacing: 0.1em; margin-bottom: 0.5rem; }
-    .review-card__meta {
-      font-size: 0.8rem;
-      color: var(--grey);
-      margin-bottom: 0.75rem;
-    }
-    .review-card__meta strong { color: var(--white); }
-    .review-card p {
-      font-size: 0.9rem;
-      color: var(--grey);
-      display: -webkit-box;
-      -webkit-line-clamp: 5;
-      -webkit-box-orient: vertical;
-      overflow: hidden;
-    }
-    @media (max-width: 900px) {
-      .reviews__grid { grid-template-columns: 1fr; }
-    }
-
-    /* ----- CONTACT ----- */
-    .contact {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      min-height: 420px;
-    }
-    .contact__info {
-      padding: clamp(2rem, 5vw, 4rem);
-      background: var(--dark);
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-    }
-    .contact__row {
-      margin-bottom: 1.25rem;
-      font-size: 0.95rem;
-    }
-    .contact__row strong {
-      display: block;
-      font-size: 0.7rem;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      color: var(--grey);
+    .feature-card__icon { font-size: 2rem; margin-bottom: var(--space-sm); }
+    .feature-card h3 {
+      font-family: "Playfair Display", Georgia, serif;
+      font-size: 1.2rem;
       margin-bottom: 0.35rem;
     }
-    .contact__row a { color: var(--blue-bright); text-decoration: none; }
-    .contact__row a:hover { text-decoration: underline; }
-    .contact__map {
+    .feature-card p { font-size: 0.92rem; color: rgba(44, 26, 14, 0.7); }
+
+    .why-list {
+      list-style: none;
+      display: grid;
+      gap: var(--space-sm);
+      max-width: 700px;
+    }
+    .why-list li {
+      padding-left: 1.75rem;
       position: relative;
-      background: var(--black);
-      border-left: 1px solid rgba(255, 255, 255, 0.06);
-      overflow: hidden;
+      font-size: 1rem;
     }
-    .contact__map-grid {
+    .why-list li::before {
+      content: "✦";
       position: absolute;
-      inset: 0;
-      background-image:
-        linear-gradient(rgba(26, 111, 255, 0.08) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(26, 111, 255, 0.08) 1px, transparent 1px);
-      background-size: 32px 32px;
-      opacity: 0.4;
-    }
-    .contact__pin-wrap {
-      position: absolute;
-      inset: 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-    .contact__pin {
-      width: 24px;
-      height: 24px;
-      background: var(--blue);
-      border-radius: 50% 50% 50% 0;
-      transform: rotate(-45deg);
-      box-shadow: 0 0 0 8px rgba(26, 111, 255, 0.25);
-      animation: pinPulse 2s ease-in-out infinite;
-    }
-    @keyframes pinPulse {
-      0%, 100% { box-shadow: 0 0 0 8px rgba(26, 111, 255, 0.25); transform: rotate(-45deg) scale(1); }
-      50% { box-shadow: 0 0 0 20px rgba(26, 111, 255, 0.1); transform: rotate(-45deg) scale(1.08); }
-    }
-    .contact__map-link {
-      position: absolute;
-      bottom: 2rem;
-      left: 50%;
-      transform: translateX(-50%);
-      z-index: 2;
-    }
-    .contact__map-link a {
-      color: var(--white);
-      font-weight: 600;
-      text-decoration: none;
-      border-bottom: 2px solid var(--blue);
-      padding-bottom: 2px;
-    }
-    .contact__map-link a:hover { color: var(--blue-bright); }
-    @media (max-width: 900px) {
-      .contact { grid-template-columns: 1fr; }
-      .contact__map { min-height: 280px; border-left: none; border-top: 1px solid rgba(255, 255, 255, 0.06); }
+      left: 0;
+      color: var(--gold);
+      font-size: 0.9rem;
     }
 
-    /* ----- FOOTER ----- */
-    .footer {
-      padding: 3rem clamp(1rem, 4vw, 3rem) 2rem;
-      background: #020203;
-      border-top: 1px solid rgba(255, 255, 255, 0.06);
+    .showcase-wrap {
+      overflow: hidden;
+      margin: 0 calc(-1 * var(--space-md));
+      padding: var(--space-md) var(--space-md);
     }
-    .footer__top {
+    .showcase {
+      display: flex;
+      gap: var(--space-md);
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      padding-bottom: var(--space-sm);
+      -webkit-overflow-scrolling: touch;
+    }
+    .showcase::-webkit-scrollbar { height: 6px; }
+    .showcase::-webkit-scrollbar-thumb { background: rgba(212, 175, 55, 0.4); border-radius: 4px; }
+    .show-card {
+      flex: 0 0 min(280px, 85vw);
+      scroll-snap-align: start;
+      border-radius: var(--radius);
+      overflow: hidden;
+      background: var(--white);
+      box-shadow: var(--shadow);
+      border: 1px solid rgba(44, 26, 14, 0.06);
+      text-decoration: none;
+      color: inherit;
+      transition: transform 0.25s, box-shadow 0.25s;
+    }
+    .show-card:hover { transform: translateY(-4px); box-shadow: 0 16px 48px rgba(44, 26, 14, 0.12); }
+    .show-card img { height: 160px; width: 100%; object-fit: cover; }
+    .show-card__body { padding: var(--space-md); }
+    .show-card__body h3 {
+      font-family: "Playfair Display", Georgia, serif;
+      font-size: 1.15rem;
+      margin-bottom: 0.25rem;
+    }
+    .show-card__body p { font-size: 0.85rem; color: rgba(44, 26, 14, 0.65); }
+
+    /* ----- Menu grid ----- */
+    .menu-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: var(--space-md);
+    }
+    .menu-card {
+      background: var(--white);
+      border-radius: var(--radius);
+      padding: var(--space-lg);
+      border: 1px solid rgba(44, 26, 14, 0.08);
+      box-shadow: var(--shadow);
+      text-decoration: none;
+      color: inherit;
+      display: block;
+      transition: transform 0.25s, box-shadow 0.25s, border-color 0.25s;
+    }
+    .menu-card:hover {
+      transform: scale(1.03);
+      box-shadow: 0 20px 50px rgba(44, 26, 14, 0.12);
+      border-color: rgba(212, 175, 55, 0.45);
+    }
+    .menu-card__icon { font-size: 2rem; margin-bottom: var(--space-sm); }
+    .menu-card h3 {
+      font-family: "Playfair Display", Georgia, serif;
+      font-size: 1.35rem;
+      margin-bottom: 0.5rem;
+    }
+    .menu-card p { font-size: 0.92rem; color: rgba(44, 26, 14, 0.7); }
+
+    /* ----- Page banners ----- */
+    .page-banner {
+      position: relative;
+      padding: var(--space-xl) var(--space-md);
+      text-align: center;
+      background: linear-gradient(180deg, #f5ebe0 0%, var(--bg) 100%);
+      border-bottom: 1px solid rgba(44, 26, 14, 0.08);
+    }
+    .page-banner h1 {
+      font-family: "Playfair Display", Georgia, serif;
+      font-size: clamp(2rem, 5vw, 3rem);
+      margin-bottom: var(--space-sm);
+    }
+    .page-banner .divider {
+      width: 80px;
+      height: 3px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+      margin: 0 auto var(--space-md);
+      border-radius: 2px;
+    }
+    .page-banner p {
+      max-width: 560px;
+      margin: 0 auto;
+      color: rgba(44, 26, 14, 0.75);
+    }
+
+    /* ----- Product grid ----- */
+    .product-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: var(--space-lg);
+      padding: var(--space-xl) var(--space-md);
+      max-width: 1280px;
+      margin: 0 auto;
+    }
+    .product-card {
+      background: var(--white);
+      border-radius: var(--radius);
+      overflow: hidden;
+      border: 1px solid rgba(44, 26, 14, 0.08);
+      box-shadow: var(--shadow);
+      transition: transform 0.25s, box-shadow 0.25s;
+    }
+    .product-card:hover {
+      transform: scale(1.03);
+      box-shadow: 0 20px 50px rgba(44, 26, 14, 0.14);
+    }
+    .product-card img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+    }
+    .product-card__body { padding: var(--space-md); }
+    .product-card h3 {
+      font-family: "Playfair Display", Georgia, serif;
+      font-size: 1.2rem;
+      margin-bottom: 0.35rem;
+    }
+    .product-card p {
+      font-size: 0.88rem;
+      color: rgba(44, 26, 14, 0.7);
+      margin-bottom: var(--space-md);
+    }
+    .product-card .btn { width: 100%; font-size: 0.82rem; padding: 0.7rem 1rem; }
+
+    .devis-block {
+      max-width: 720px;
+      margin: var(--space-xl) auto;
+      padding: var(--space-xl) var(--space-md);
+      text-align: center;
+      background: linear-gradient(135deg, #fffdf8 0%, #f5ebe0 100%);
+      border-radius: var(--radius);
+      border: 1px solid rgba(212, 175, 55, 0.25);
+    }
+    .devis-block h2 {
+      font-family: "Playfair Display", Georgia, serif;
+      font-size: 1.75rem;
+      margin-bottom: var(--space-sm);
+    }
+    .devis-block p { margin-bottom: var(--space-md); color: rgba(44, 26, 14, 0.75); }
+
+    /* ----- Gallery ----- */
+    .gallery-toolbar {
       display: flex;
       flex-wrap: wrap;
-      justify-content: space-between;
-      gap: 2rem;
-      margin-bottom: 2.5rem;
+      gap: var(--space-sm);
+      justify-content: center;
+      padding: var(--space-md);
     }
-    .footer__brand { max-width: 280px; }
-    .footer__tagline {
+    .filter-btn {
+      padding: 0.5rem 1.1rem;
+      border-radius: 999px;
+      border: 1px solid rgba(44, 26, 14, 0.2);
+      background: var(--white);
+      font-family: inherit;
       font-size: 0.85rem;
-      color: var(--grey);
-      margin-top: 0.75rem;
-      line-height: 1.5;
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s, border-color 0.2s;
     }
-    .footer__social {
-      display: flex;
-      gap: 0.75rem;
-      margin-top: 1rem;
+    .filter-btn:hover,
+    .filter-btn.is-on {
+      background: var(--header-bg);
+      color: var(--gold);
+      border-color: var(--header-bg);
     }
-    .footer__social a {
-      width: 40px;
-      height: 40px;
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: var(--space-sm);
+      padding: 0 var(--space-md) var(--space-xl);
+      max-width: 1280px;
+      margin: 0 auto;
+    }
+    .gallery-item {
+      position: relative;
+      border-radius: var(--radius);
+      overflow: hidden;
+      cursor: pointer;
+      aspect-ratio: 1;
+      border: none;
+      padding: 0;
+      display: block;
+      width: 100%;
+      background: none;
+    }
+    .gallery-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.4s ease;
+    }
+    .gallery-item:hover img { transform: scale(1.06); }
+    .gallery-item.is-hidden { display: none; }
+
+    .lightbox {
+      position: fixed;
+      inset: 0;
+      z-index: 2000;
+      background: rgba(26, 15, 0, 0.88);
       display: flex;
       align-items: center;
       justify-content: center;
-      border: 1px solid rgba(255, 255, 255, 0.12);
-      color: var(--grey);
-      transition: border-color 0.2s, color 0.2s, background 0.2s;
+      padding: var(--space-md);
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.3s, visibility 0.3s;
     }
-    .footer__social a:hover {
-      border-color: var(--blue);
-      color: var(--blue-bright);
-      background: rgba(26, 111, 255, 0.1);
+    .lightbox.is-open { opacity: 1; visibility: visible; }
+    .lightbox img {
+      max-width: min(92vw, 900px);
+      max-height: 88vh;
+      object-fit: contain;
+      border-radius: 8px;
+      box-shadow: 0 24px 80px rgba(0,0,0,0.5);
     }
-    .footer__social svg { display: block; }
-    .footer__links {
-      display: flex;
-      gap: 2.5rem;
-      flex-wrap: wrap;
-    }
-    .footer__links h4 {
-      font-size: 0.7rem;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: var(--grey);
-      margin-bottom: 0.75rem;
-    }
-    .footer__links ul { list-style: none; }
-    .footer__links a {
+    .lightbox__close {
+      position: absolute;
+      top: var(--space-md);
+      right: var(--space-md);
+      width: 48px; height: 48px;
+      border: 1px solid rgba(255,255,255,0.3);
+      background: rgba(0,0,0,0.3);
       color: var(--white);
+      font-size: 1.5rem;
+      border-radius: 50%;
+      cursor: pointer;
+    }
+
+    /* ----- Reviews ----- */
+    .reviews-head {
+      text-align: center;
+      padding: var(--space-xl) var(--space-md) var(--space-md);
+    }
+    .reviews-head .rating {
+      font-family: "Playfair Display", Georgia, serif;
+      font-size: 2rem;
+      color: var(--gold);
+    }
+    .reviews-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: var(--space-md);
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 var(--space-md) var(--space-xl);
+    }
+    .review-card {
+      background: var(--white);
+      padding: var(--space-lg);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      border: 1px solid rgba(44, 26, 14, 0.06);
+    }
+    .review-card .stars { color: var(--gold); letter-spacing: 0.15em; margin-bottom: 0.5rem; }
+    .review-card .name { font-weight: 700; margin-bottom: 0.25rem; }
+    .review-card .text { font-size: 0.95rem; color: rgba(44, 26, 14, 0.78); }
+
+    /* ----- Contact ----- */
+    .contact-layout {
+      display: grid;
+      grid-template-columns: 1fr 1.2fr;
+      gap: var(--space-lg);
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: var(--space-xl) var(--space-md);
+    }
+    @media (max-width: 900px) { .contact-layout { grid-template-columns: 1fr; } }
+    .contact-card {
+      background: var(--white);
+      padding: var(--space-lg);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      border: 1px solid rgba(44, 26, 14, 0.08);
+    }
+    .contact-card h2 {
+      font-family: "Playfair Display", Georgia, serif;
+      margin-bottom: var(--space-md);
+    }
+    .contact-row { margin-bottom: var(--space-md); font-size: 0.95rem; }
+    .contact-row strong { display: block; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.08em; color: rgba(44, 26, 14, 0.5); margin-bottom: 0.25rem; }
+    .contact-row a { color: var(--text); text-decoration: underline; text-underline-offset: 3px; }
+    .map-wrap {
+      border-radius: var(--radius);
+      overflow: hidden;
+      min-height: 360px;
+      box-shadow: var(--shadow);
+      border: 1px solid rgba(44, 26, 14, 0.1);
+    }
+    .map-wrap iframe { width: 100%; height: 100%; min-height: 360px; border: 0; }
+    .contact-form {
+      margin-top: var(--space-lg);
+      display: grid;
+      gap: var(--space-sm);
+    }
+    .contact-form label { font-size: 0.8rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; }
+    .contact-form input,
+    .contact-form textarea {
+      width: 100%;
+      padding: 0.75rem 1rem;
+      border: 1px solid rgba(44, 26, 14, 0.15);
+      border-radius: 8px;
+      font-family: inherit;
+      font-size: 1rem;
+      background: #fffef9;
+    }
+    .contact-form textarea { min-height: 120px; resize: vertical; }
+
+    /* ----- Footer ----- */
+    .footer {
+      background: var(--header-bg);
+      color: var(--gold-soft);
+      padding: var(--space-xl) var(--space-md);
+      margin-top: var(--space-xl);
+    }
+    .footer__inner {
+      max-width: 1280px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: var(--space-lg);
+    }
+    .footer .logo { display: inline-block; margin-bottom: var(--space-sm); }
+    .footer__tag { font-size: 0.9rem; opacity: 0.85; line-height: 1.5; }
+    .footer h4 {
+      font-family: "Playfair Display", Georgia, serif;
+      color: var(--gold);
+      font-size: 1rem;
+      margin-bottom: var(--space-sm);
+    }
+    .footer ul { list-style: none; }
+    .footer a {
+      color: var(--gold-soft);
       text-decoration: none;
       font-size: 0.9rem;
       display: block;
-      margin-bottom: 0.4rem;
-      opacity: 0.85;
+      margin-bottom: 0.35rem;
     }
-    .footer__links a:hover { color: var(--blue-bright); }
+    .footer a:hover { text-decoration: underline; }
+    .footer__social { display: flex; gap: var(--space-sm); margin-top: var(--space-sm); }
+    .footer__social a {
+      width: 42px; height: 42px;
+      border: 1px solid rgba(212, 175, 55, 0.35);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 0;
+    }
     .footer__bottom {
-      padding-top: 1.5rem;
-      border-top: 1px solid rgba(255, 255, 255, 0.06);
+      text-align: center;
+      padding-top: var(--space-lg);
+      margin-top: var(--space-lg);
+      border-top: 1px solid rgba(212, 175, 55, 0.15);
+      font-size: 0.82rem;
+      opacity: 0.75;
+    }
+
+    /* ----- WhatsApp float ----- */
+    .wa-float {
+      position: fixed;
+      bottom: 1.5rem;
+      right: 1.5rem;
+      z-index: 1500;
+      width: 58px;
+      height: 58px;
+      border-radius: 50%;
+      background: var(--wa);
+      color: var(--white);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 8px 28px rgba(37, 211, 102, 0.45);
+      text-decoration: none;
+      animation: waPulse 2s ease-in-out infinite;
+    }
+    .wa-float::before {
+      content: "";
+      position: absolute;
+      inset: -6px;
+      border-radius: 50%;
+      border: 2px solid rgba(37, 211, 102, 0.45);
+      animation: waRing 2s ease-out infinite;
+    }
+    @keyframes waPulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.04); }
+    }
+    @keyframes waRing {
+      0% { transform: scale(1); opacity: 0.6; }
+      100% { transform: scale(1.35); opacity: 0; }
+    }
+    .wa-float svg { width: 30px; height: 30px; position: relative; z-index: 1; }
+    .wa-float[data-tip]:hover::after {
+      content: attr(data-tip);
+      position: absolute;
+      right: 70px;
+      white-space: nowrap;
+      background: var(--header-bg);
+      color: var(--gold);
+      padding: 0.4rem 0.75rem;
+      border-radius: 8px;
       font-size: 0.8rem;
-      color: var(--grey);
+      font-weight: 600;
+      box-shadow: var(--shadow);
+    }
+
+    .about-img {
+      border-radius: var(--radius);
+      overflow: hidden;
+      margin: var(--space-md) 0;
+      max-width: 320px;
+      box-shadow: var(--shadow);
     }
   </style>
 </head>
-<body>
-  <!-- Images attendues dans /images/ (qualité originale, noms à aligner sur vos fichiers) :
-       hero-1-belgaform-neon.jpg | hero-2.jpg | hero-3.jpg
-       activity-musculation.jpg | activity-judo.jpg | activity-boxe-mma.jpg
-       activity-cycling.jpg | activity-bodypump.jpg | activity-personal-training.jpg -->
-  <header class="nav">
-    <a href="#top" class="nav__brand">
-      <svg class="nav__logo" width="48" height="48" viewBox="0 0 120 120" aria-hidden="true">
-        <circle cx="60" cy="60" r="56" fill="none" stroke="#1a6fff" stroke-width="3"/>
-        <circle cx="60" cy="60" r="48" fill="none" stroke="rgba(255,255,255,0.15)" stroke-width="1"/>
-        <text fill="#f0f0f5" font-family="Bebas Neue, sans-serif" font-size="8" letter-spacing="1.2">
-          <textPath href="#badgePath" startOffset="50%" text-anchor="middle">BELGAFORM TRAINING CENTER</textPath>
-        </text>
-        <path id="badgePath" d="M 60 10 A 50 50 0 1 1 59.99 10" fill="none"/>
-        <path fill="#1a6fff" d="M60 38 L68 56 L88 56 L72 68 L78 88 L60 76 L42 88 L48 68 L32 56 L52 56 Z"/>
-      </svg>
-      <span class="nav__wordmark">BELG<span style="color:#1a6fff">★</span>FORM</span>
-    </a>
-    <nav aria-label="Principal">
-      <ul class="nav__links">
-        <li><a href="#activites">Activités</a></li>
-        <li><a href="#apropos">À propos</a></li>
-        <li><a href="#horaires">Horaires</a></li>
-        <li><a href="#tarifs">Tarifs</a></li>
-        <li><a href="#avis">Avis</a></li>
-      </ul>
-    </nav>
-    <a href="#contact" class="nav__cta clip-btn clip-btn--blue">S'inscrire</a>
+<body class="hero-load">
+  <header class="header" id="header">
+    <div class="header__inner">
+      <a href="#home" class="logo" data-route>Art Y Chaud <span>✦</span> DELICES</a>
+      <button type="button" class="nav__toggle" id="navToggle" aria-expanded="false" aria-controls="navPanel" aria-label="Ouvrir le menu">
+        <span></span><span></span><span></span>
+      </button>
+      <div class="nav__panel" id="navPanel">
+        <nav aria-label="Navigation principale">
+          <ul class="nav__list">
+            <li><a href="#home" data-route>Accueil</a></li>
+            <li><a href="#menu" data-route>Menu</a></li>
+            <li><a href="#patisserie" data-route>Pâtisseries</a></li>
+            <li><a href="#traiteur" data-route>Traiteur</a></li>
+            <li><a href="#galerie" data-route>Galerie</a></li>
+            <li><a href="#avis" data-route>Avis</a></li>
+            <li><a href="#contact" data-route>Contact</a></li>
+          </ul>
+        </nav>
+      </div>
+    </div>
   </header>
 
-  <section class="hero" id="top" aria-label="Accueil">
-    <div class="hero__slides" id="heroSlides">
-      <div class="hero__slide is-active" style="background-image: url('images/hero-1-belgaform-neon.jpg');" role="img" aria-label="Salle Belgaform néon"></div>
-      <div class="hero__slide" style="background-image: url('images/hero-2.jpg');" role="img" aria-label="Salle de sport"></div>
-      <div class="hero__slide" style="background-image: url('images/hero-3.jpg');" role="img" aria-label="Espace training"></div>
-    </div>
-    <div class="hero__overlay"></div>
-    <div class="hero__content fade-up is-visible">
-      <p class="hero__badge">Training Center · Sala Al Jadida</p>
-      <h1>FORGE TON CORPS</h1>
-      <p class="hero__lead">
-        Équipements premium, coachs passionnés et une ambiance électrique au cœur de Sala Al Jadida. Rejoins la communauté Belgaform.
-      </p>
-      <div class="hero__actions">
-        <a href="#contact" class="clip-btn clip-btn--blue">Commencer maintenant</a>
-        <a href="#activites" class="clip-btn clip-btn--ghost">Découvrir</a>
-      </div>
-    </div>
-    <aside class="hero__stats" aria-label="Chiffres clés">
-      <div class="hero__stat">
-        <strong>187+</strong>
-        <span>Avis Google</span>
-      </div>
-      <div class="hero__stat">
-        <strong>3.8★</strong>
-        <span>Note</span>
-      </div>
-      <div class="hero__stat">
-        <strong>6+</strong>
-        <span>Activités</span>
-      </div>
-    </aside>
-  </section>
-
-  <section class="activities" id="activites">
-    <p class="section-label fade-up">Espaces & cours</p>
-    <h2 class="section-title fade-up">TES ACTIVITÉS</h2>
-    <div class="activities__grid">
-      <article class="act-card act-card--wide fade-up">
-        <div class="act-card__bg" style="background-image: url('images/activity-musculation.jpg');"></div>
-        <div class="act-card__shade"></div>
-        <div class="act-card__inner">
-          <span class="act-card__tag">Force</span>
-          <h3>MUSCULATION</h3>
-          <p class="act-card__desc">Machines guidées, poids libres et zone fonctionnelle pour progresser à ton rythme.</p>
-        </div>
-        <span class="act-card__arrow" aria-hidden="true">→</span>
-      </article>
-      <article class="act-card fade-up">
-        <div class="act-card__bg" style="background-image: url('images/activity-judo.jpg');"></div>
-        <div class="act-card__shade"></div>
-        <div class="act-card__inner">
-          <span class="act-card__tag">Arts martiaux</span>
-          <h3>JUDO & JIU-JITSU</h3>
-          <p class="act-card__desc">Tatami dédié, techniques et respect du code martial.</p>
-        </div>
-        <span class="act-card__arrow" aria-hidden="true">→</span>
-      </article>
-      <article class="act-card fade-up">
-        <div class="act-card__bg" style="background-image: url('images/activity-boxe-mma.jpg');"></div>
-        <div class="act-card__shade"></div>
-        <div class="act-card__inner">
-          <span class="act-card__tag">Combat</span>
-          <h3>BOXE & MMA</h3>
-          <p class="act-card__desc">Ring, sacs et cage pour décharger et performer.</p>
-        </div>
-        <span class="act-card__arrow" aria-hidden="true">→</span>
-      </article>
-      <article class="act-card fade-up">
-        <div class="act-card__bg" style="background-image: url('images/activity-cycling.jpg');"></div>
-        <div class="act-card__shade"></div>
-        <div class="act-card__inner">
-          <span class="act-card__tag">Cardio</span>
-          <h3>CYCLING</h3>
-          <p class="act-card__desc">Salle immersive, rythme et motivation collective.</p>
-        </div>
-        <span class="act-card__arrow" aria-hidden="true">→</span>
-      </article>
-      <article class="act-card fade-up">
-        <div class="act-card__bg" style="background-image: url('images/activity-bodypump.jpg');"></div>
-        <div class="act-card__shade"></div>
-        <div class="act-card__inner">
-          <span class="act-card__tag">Cours collectifs</span>
-          <h3>BODY PUMP</h3>
-          <p class="act-card__desc">Renforcement global avec barres et disques.</p>
-        </div>
-        <span class="act-card__arrow" aria-hidden="true">→</span>
-      </article>
-      <article class="act-card fade-up">
-        <div class="act-card__bg" style="background-image: url('images/activity-personal-training.jpg');"></div>
-        <div class="act-card__shade"></div>
-        <div class="act-card__inner">
-          <span class="act-card__tag">Sur mesure</span>
-          <h3>PERSONAL TRAINING</h3>
-          <p class="act-card__desc">Programme individualisé avec un coach dédié.</p>
-        </div>
-        <span class="act-card__arrow" aria-hidden="true">→</span>
-      </article>
-    </div>
-  </section>
-
-  <section class="about" id="apropos">
-    <div class="about__visual fade-up">
-      <svg class="about__watermark" viewBox="0 0 120 120" aria-hidden="true">
-        <circle cx="60" cy="60" r="56" fill="none" stroke="#1a6fff" stroke-width="2"/>
-        <path fill="#1a6fff" opacity="0.5" d="M60 38 L68 56 L88 56 L72 68 L78 88 L60 76 L42 88 L48 68 L32 56 L52 56 Z"/>
-      </svg>
-      <div class="about__stats">
-        <div class="stat-glass">
-          <div class="num" data-target="10">0</div>
-          <div class="lbl">ans d'expérience</div>
-        </div>
-        <div class="stat-glass">
-          <div class="num" data-target="500">0</div>
-          <div class="lbl">membres</div>
-        </div>
-        <div class="stat-glass">
-          <div class="num" data-target="15">0</div>
-          <div class="lbl">coachs</div>
-        </div>
-        <div class="stat-glass">
-          <div class="num" data-target="6">0</div>
-          <div class="lbl">disciplines</div>
+  <main class="spa-pages" id="spaRoot">
+    <!-- HOME -->
+    <section id="page-home" class="spa-page is-active" aria-label="Accueil">
+      <div class="hero">
+        <div class="hero__bg" aria-hidden="true"></div>
+        <div class="hero__photo" aria-hidden="true"></div>
+        <div class="hero__content">
+          <h1>Art &amp; Saveur au Cœur de Témara</h1>
+          <p class="hero__sub">Pâtisserie raffinée · Traiteur événementiel · Livraison à domicile</p>
+          <div class="hero__cta">
+            <a href="#menu" class="btn btn--gold" data-route>Voir notre Menu</a>
+            <a href="#contact" class="btn btn--outline" data-route>Nous Contacter</a>
+          </div>
         </div>
       </div>
-    </div>
-    <div class="about__text fade-up">
-      <p class="section-label">Notre histoire</p>
-      <h2 class="section-title">BIEN PLUS QU'UNE SALLE</h2>
-      <p>
-        Belgaform Training Center, c'est un lieu où la performance rencontre l'accueil. Depuis plus de dix ans sur l'avenue Moulay Youssef, nous accompagnons débutants et athlètes avec des espaces dédiés — musculation, arts martiaux, cycling et coaching personnalisé.
-      </p>
-      <p>
-        Notre équipe met l'humain au centre : suivi, conseils et ambiance motivante pour que chaque séance compte.
-      </p>
-      <ul class="about__list">
-        <li>Installations modernes et salles thématiques</li>
-        <li>Coachs certifiés et présents sur le plateau</li>
-        <li>Cours collectifs et créneaux étendus en semaine</li>
-        <li>Adresse centrale à Sala Al Jadida</li>
-      </ul>
-      <a href="#tarifs" class="clip-btn clip-btn--blue">Voir les formules</a>
-    </div>
-  </section>
-
-  <section class="schedule" id="horaires">
-    <p class="section-label fade-up">Planning</p>
-    <h2 class="section-title fade-up">HORAIRES D'OUVERTURE</h2>
-    <p class="fade-up" style="color: var(--grey); max-width: 560px;">
-      Horaires affichés à titre indicatif — le club ouvre à partir de 9h en semaine (conformément aux informations Google).
-    </p>
-    <div class="schedule__grid" id="scheduleGrid" role="list"></div>
-  </section>
-
-  <section class="pricing" id="tarifs">
-    <div class="section-head--center fade-up">
-      <p class="section-label">Abonnements</p>
-      <h2 class="section-title">TARIFS</h2>
-    </div>
-    <div class="pricing__wrap">
-      <div class="price-card fade-up">
-        <h3 class="price-card__name">Mensuel</h3>
-        <p class="price-card__amt">250 <small>MAD / mois</small></p>
-        <ul>
-          <li>Accès illimité à la salle</li>
-          <li>Tous les espaces musculation & cardio</li>
-          <li>Vestiaires & douches</li>
-          <li>Sans engagement au-delà du mois</li>
+      <div class="section">
+        <h2 class="section__title reveal">Nos engagements</h2>
+        <div class="features">
+          <div class="feature-card reveal">
+            <div class="feature-card__icon" aria-hidden="true">🥐</div>
+            <h3>Fait Maison</h3>
+            <p>Préparations artisanales, ingrédients sélectionnés et savoir-faire marocain.</p>
+          </div>
+          <div class="feature-card reveal">
+            <div class="feature-card__icon" aria-hidden="true">🎉</div>
+            <h3>Événements sur mesure</h3>
+            <p>Mariages, anniversaires, Ramadan et réceptions : menus personnalisés.</p>
+          </div>
+          <div class="feature-card reveal">
+            <div class="feature-card__icon" aria-hidden="true">🚗</div>
+            <h3>Livraison rapide</h3>
+            <p>Commandez en ligne et recevez vos créations à Témara et environs.</p>
+          </div>
+        </div>
+      </div>
+      <div class="section">
+        <h2 class="section__title reveal">Pourquoi nous choisir&nbsp;?</h2>
+        <ul class="why-list reveal">
+          <li>Une équipe passionnée par le goût et la présentation.</li>
+          <li>Large choix : pains, viennoiseries, pâtisseries orientales et traiteur salé.</li>
+          <li>Accompagnement pour vos buffets et cérémonies.</li>
+          <li>Contact direct via WhatsApp pour un service réactif.</li>
         </ul>
+        <div class="about-img reveal">
+          <img src="assets/art-enseigne.png" alt="Enseigne Art Y Chaud à Témara" width="640" height="480" loading="lazy" />
+        </div>
       </div>
-      <div class="price-card price-card--featured fade-up">
-        <span class="price-card__badge">Le plus choisi</span>
-        <h3 class="price-card__name">Trimestriel</h3>
-        <p class="price-card__amt">650 <small>MAD / trimestre</small></p>
-        <ul>
-          <li>Tout le pack mensuel</li>
-          <li>Économie vs mensuel</li>
-          <li>Accès cours collectifs sélectionnés</li>
-          <li>1 bilan forme avec un coach</li>
-        </ul>
+      <div class="section">
+        <h2 class="section__title reveal">Nos univers gourmands</h2>
+        <p class="section__lead reveal">Faites défiler pour découvrir nos spécialités — un clic pour explorer.</p>
+        <div class="showcase-wrap reveal">
+          <div class="showcase">
+            <a href="#patisserie" class="show-card" data-route>
+              <img src="assets/art-macarons.png" alt="" width="400" height="200" loading="lazy" />
+              <div class="show-card__body">
+                <h3>Pâtisseries</h3>
+                <p>Gâteaux, macarons et douceurs raffinées.</p>
+              </div>
+            </a>
+            <a href="#traiteur" class="show-card" data-route>
+              <img src="assets/art-traiteur-plateau.png" alt="" width="400" height="200" loading="lazy" />
+              <div class="show-card__body">
+                <h3>Traiteur</h3>
+                <p>Plateaux, canapés et prestations événementielles.</p>
+              </div>
+            </a>
+            <a href="#traiteur" class="show-card" data-route>
+              <img src="assets/art-mini-pizzas.png" alt="" width="400" height="200" loading="lazy" />
+              <div class="show-card__body">
+                <h3>Mini pizzas</h3>
+                <p>Bouchées salées idéales pour l’apéritif.</p>
+              </div>
+            </a>
+            <a href="#traiteur" class="show-card" data-route>
+              <img src="assets/art-briouates-nems.png" alt="" width="400" height="200" loading="lazy" />
+              <div class="show-card__body">
+                <h3>Briouates</h3>
+                <p>Feuilletés garnis, saveurs marocaines.</p>
+              </div>
+            </a>
+            <a href="#traiteur" class="show-card" data-route>
+              <img src="assets/art-pastilla.png" alt="" width="400" height="200" loading="lazy" />
+              <div class="show-card__body">
+                <h3>Pastilla</h3>
+                <p>Du mini au grand format pour vos tables.</p>
+              </div>
+            </a>
+            <a href="#patisserie" class="show-card" data-route>
+              <img src="assets/art-douceurs-sucrees.png" alt="" width="400" height="200" loading="lazy" />
+              <div class="show-card__body">
+                <h3>Gâteaux</h3>
+                <p>Chebbakia, makrout, baqlawa et plus encore.</p>
+              </div>
+            </a>
+          </div>
+        </div>
       </div>
-      <div class="price-card fade-up">
-        <h3 class="price-card__name">Annuel</h3>
-        <p class="price-card__amt">2000 <small>MAD / an</small></p>
-        <ul>
-          <li>Meilleur tarif à l'année</li>
-          <li>Accès complet 12 mois</li>
-          <li>Invitations événements membres</li>
-          <li>Priorité sur les nouveaux cours</li>
-        </ul>
-      </div>
-    </div>
-  </section>
+    </section>
 
-  <section class="reviews" id="avis">
-    <div class="reviews__header fade-up">
-      <div>
-        <p class="section-label" style="margin-bottom: 0.5rem;">Google</p>
-        <h2 class="section-title" style="margin-bottom: 0;">AVIS CLIENTS</h2>
+    <!-- MENU -->
+    <section id="page-menu" class="spa-page" aria-label="Notre menu">
+      <div class="page-banner">
+        <h1>Notre Menu</h1>
+        <div class="divider" aria-hidden="true"></div>
+        <p>Choisissez une catégorie pour découvrir nos créations et commander sur WhatsApp.</p>
       </div>
-      <p class="reviews__overall">
-        <strong>3.8/5</strong> · 187 avis
-      </p>
-    </div>
-    <div class="reviews__grid">
-      <article class="review-card fade-up">
-        <p class="review-card__stars">★★★★★</p>
-        <p class="review-card__meta"><strong>move master</strong> · il y a 5 mois</p>
-        <p>Super expérience, les coachs sont au top et très à l'écoute. Mention spéciale au commercial Youssef pour son professionnalisme et sa gentillesse. Je recommande vivement Belgaform.</p>
-      </article>
-      <article class="review-card fade-up">
-        <p class="review-card__stars">★★★★★</p>
-        <p class="review-card__meta"><strong>LINA LINA</strong> · il y a 4 mois</p>
-        <p>Accueil chaleureux dès l'arrivée, équipe motivante et coachs qui savent pousser sans brusquer. Ambiance familiale, on se sent bien pour s'entraîner sérieusement.</p>
-      </article>
-      <article class="review-card fade-up">
-        <p class="review-card__stars">★★★☆☆</p>
-        <p class="review-card__meta"><strong>Ghita Ben</strong> · il y a 6 mois</p>
-        <p>La salle peut convenir pour un entraînement basique ; le matériel reste correct sans être exceptionnel. Quelques points d'hygiène pourraient être améliorés. Bon pour débuter ou maintenir la forme.</p>
-      </article>
-    </div>
-  </section>
+      <div class="section menu-grid">
+        <a href="#patisserie" class="menu-card reveal" data-route>
+          <div class="menu-card__icon" aria-hidden="true">🍰</div>
+          <h3>Pâtisseries</h3>
+          <p>Viennoiseries, entremets et douceurs du jour.</p>
+        </a>
+        <a href="#patisserie" class="menu-card reveal" data-route>
+          <div class="menu-card__icon" aria-hidden="true">🎂</div>
+          <h3>Gâteaux</h3>
+          <p>Pâtisseries orientales, tartes et gâteaux de cérémonie.</p>
+        </a>
+        <a href="#traiteur" class="menu-card reveal" data-route>
+          <div class="menu-card__icon" aria-hidden="true">◆</div>
+          <h3>Briouates</h3>
+          <p>Feuilletés salés, nems et chaussons artisanaux.</p>
+        </a>
+        <a href="#traiteur" class="menu-card reveal" data-route>
+          <div class="menu-card__icon" aria-hidden="true">🥧</div>
+          <h3>Pastilla</h3>
+          <p>Poulet, fruits de mer, fromage — toutes tailles.</p>
+        </a>
+        <a href="#traiteur" class="menu-card reveal" data-route>
+          <div class="menu-card__icon" aria-hidden="true">🍽️</div>
+          <h3>Traiteur &amp; plats</h3>
+          <p>Plateaux froids, plats chauds et service événementiel.</p>
+        </a>
+        <a href="#traiteur" class="menu-card reveal" data-route>
+          <div class="menu-card__icon" aria-hidden="true">🍕</div>
+          <h3>Mini pizzas</h3>
+          <p>Miniatures gourmandes pour vos réceptions.</p>
+        </a>
+      </div>
+    </section>
 
-  <section class="contact" id="contact">
-    <div class="contact__info fade-up">
-      <p class="section-label">Coordonnées</p>
-      <h2 class="section-title">CONTACT</h2>
-      <div class="contact__row">
-        <strong>Téléphone</strong>
-        <a href="tel:+0537533953">05 37 53 39 53</a>
+    <!-- PATISSERIE -->
+    <section id="page-patisserie" class="spa-page" aria-label="Pâtisseries">
+      <div class="page-banner">
+        <h1>Nos Pâtisseries</h1>
+        <div class="divider" aria-hidden="true"></div>
+        <p>Une sélection de créations sucrées, inspirées des traditions marocaines et de la pâtisserie française.</p>
       </div>
-      <div class="contact__row">
-        <strong>Adresse</strong>
-        Av. Moulay Youssef, Sala Al Jadida, Maroc<br />
-        <span style="color: var(--grey); font-size: 0.9rem;">Plus code : X7X5+MQ</span>
+      <div class="product-grid" id="patisserieGrid"></div>
+    </section>
+
+    <!-- TRAITEUR -->
+    <section id="page-traiteur" class="spa-page" aria-label="Traiteur">
+      <div class="page-banner">
+        <h1>Service Traiteur</h1>
+        <div class="divider" aria-hidden="true"></div>
+        <p>Nous sublimons vos moments : mariages, anniversaires, Ramadan, cérémonies familiales ou professionnelles. Buffets, plateaux sur mesure et plats chauds — discutons de votre événement.</p>
       </div>
-      <div class="contact__row">
-        <strong>Réseaux</strong>
-        <span style="color: var(--grey);">Instagram · Facebook · WhatsApp — liens en bas de page</span>
+      <div class="product-grid" id="traiteurGrid"></div>
+      <div class="devis-block reveal">
+        <h2>Demander un devis</h2>
+        <p>Décrivez-nous votre date, le nombre de convives et vos envies : nous vous répondons rapidement sur WhatsApp.</p>
+        <a href="#" class="btn btn--wa" id="devisWa">Demander un devis sur WhatsApp</a>
       </div>
-    </div>
-    <div class="contact__map fade-up" aria-label="Carte">
-      <div class="contact__map-grid"></div>
-      <div class="contact__pin-wrap">
-        <div class="contact__pin"></div>
+    </section>
+
+    <!-- GALERIE -->
+    <section id="page-galerie" class="spa-page" aria-label="Galerie">
+      <div class="page-banner">
+        <h1>Galerie</h1>
+        <div class="divider" aria-hidden="true"></div>
+        <p>Un aperçu de nos créations, entre fournil et art de la table.</p>
       </div>
-      <div class="contact__map-link">
-        <a href="https://www.google.com/maps/search/?api=1&query=X7X5%2BMQ+Av.+Moulay+Youssef+Sal%C3%A9+Al+Jadida+Maroc" target="_blank" rel="noopener noreferrer">Voir sur Google Maps</a>
+      <div class="gallery-toolbar">
+        <button type="button" class="filter-btn is-on" data-filter="all">Tout</button>
+        <button type="button" class="filter-btn" data-filter="patisserie">Pâtisseries</button>
+        <button type="button" class="filter-btn" data-filter="plats">Plats</button>
+        <button type="button" class="filter-btn" data-filter="evenements">Événements</button>
       </div>
-    </div>
-  </section>
+      <div class="gallery-grid" id="galleryGrid"></div>
+    </section>
+
+    <!-- AVIS -->
+    <section id="page-avis" class="spa-page" aria-label="Avis clients">
+      <div class="reviews-head">
+        <h1 class="section__title">Avis clients</h1>
+        <p class="rating">3,9 / 5</p>
+        <p style="color: rgba(44,26,14,0.7);">Basé sur 92 avis Google</p>
+      </div>
+      <div class="reviews-grid">
+        <article class="review-card reveal">
+          <p class="stars" aria-label="5 sur 5">★★★★★</p>
+          <p class="name">Amjad Braikate</p>
+          <p class="text">Plats savoureux, pâtisseries raffinées, présentation soignée… une vraie réussite pendant le Ramadan.</p>
+        </article>
+        <article class="review-card reveal">
+          <p class="stars" aria-label="5 sur 5">★★★★★</p>
+          <p class="name">Bensaid Doha</p>
+          <p class="text">Une prestation impeccable qui allie élégance et saveurs. Chaque assiette témoigne d’un savoir-faire remarquable.</p>
+        </article>
+        <article class="review-card reveal">
+          <p class="stars" aria-label="2 sur 5">★★☆☆☆</p>
+          <p class="name">Salma Elidrissi</p>
+          <p class="text">Mini pizzas décevantes pour une commande d’urgence avec des invités.</p>
+        </article>
+      </div>
+      <div style="text-align: center; padding-bottom: var(--space-xl);">
+        <a href="https://www.google.com/search?q=Art+Y+Chaud+DELICES+Témara+avis" class="btn btn--outline" target="_blank" rel="noopener noreferrer">Laisser un avis sur Google</a>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="page-contact" class="spa-page" aria-label="Contact">
+      <div class="page-banner">
+        <h1>Contact</h1>
+        <div class="divider" aria-hidden="true"></div>
+        <p>Nous serions ravis de préparer votre prochaine gourmandise.</p>
+      </div>
+      <div class="contact-layout">
+        <div class="contact-card reveal">
+          <h2>Art Y Chaud DELICES</h2>
+          <p style="margin-bottom: var(--space-md); color: rgba(44,26,14,0.75);">Traiteur &amp; Pâtissier — Témara</p>
+          <div class="contact-row">
+            <strong>Adresse</strong>
+            Bd Dr Abdelkrim Al Khateb, Témara, Maroc<br />
+            <span style="color: rgba(44,26,14,0.65); font-size: 0.9rem;">Code Plus Google&nbsp;: W3GC+CF</span>
+          </div>
+          <div class="contact-row">
+            <strong>Téléphone</strong>
+            <a href="tel:+212537404020">05 37 40 40 20</a>
+          </div>
+          <div class="contact-row">
+            <strong>Horaires</strong>
+            Ouvert · Ferme à 21h00
+          </div>
+          <div class="contact-row">
+            <strong>Facebook</strong>
+            <a href="https://www.facebook.com" target="_blank" rel="noopener noreferrer">facebook.com</a>
+          </div>
+          <a href="https://wa.me/212537404020" class="btn btn--wa" target="_blank" rel="noopener noreferrer" style="width:100%; margin-top: var(--space-sm);">Chattez avec nous sur WhatsApp</a>
+          <form class="contact-form" id="contactForm" novalidate>
+            <div>
+              <label for="cf-name">Nom</label>
+              <input type="text" id="cf-name" name="name" autocomplete="name" required />
+            </div>
+            <div>
+              <label for="cf-phone">Téléphone</label>
+              <input type="tel" id="cf-phone" name="phone" autocomplete="tel" required />
+            </div>
+            <div>
+              <label for="cf-msg">Message</label>
+              <textarea id="cf-msg" name="message" required></textarea>
+            </div>
+            <button type="submit" class="btn btn--gold">Envoyer via WhatsApp</button>
+          </form>
+        </div>
+        <div class="map-wrap reveal">
+          <iframe
+            title="Carte — Art Y Chaud DELICES, Témara"
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+            src="https://www.google.com/maps?q=Art+Y+Chaud+DELICES+Traiteur+%26+P%C3%A2tissier+T%C3%A9mara+Maroc&amp;output=embed&amp;z=17"
+          ></iframe>
+        </div>
+      </div>
+      <div class="section" style="padding-top: 0;">
+        <div class="about-img reveal" style="margin: 0 auto;">
+          <img src="assets/art-carte-contact.png" alt="Coordonnées Art Y Chaud" width="640" height="400" loading="lazy" />
+        </div>
+      </div>
+    </section>
+  </main>
 
   <footer class="footer">
-    <div class="footer__top">
-      <div class="footer__brand">
-        <a href="#top" class="nav__brand" style="margin-bottom: 0.5rem;">
-          <svg width="44" height="44" viewBox="0 0 120 120" aria-hidden="true">
-            <circle cx="60" cy="60" r="56" fill="none" stroke="#1a6fff" stroke-width="3"/>
-            <path fill="#1a6fff" d="M60 38 L68 56 L88 56 L72 68 L78 88 L60 76 L42 88 L48 68 L32 56 L52 56 Z"/>
-          </svg>
-          <span class="nav__wordmark">BELG<span style="color:#1a6fff">★</span>FORM</span>
-        </a>
-        <p class="footer__tagline">Training Center — Forge ton corps à Sala Al Jadida. Musculation, combat, cycling et coaching.</p>
+    <div class="footer__inner">
+      <div>
+        <a href="#home" class="logo" data-route>Art Y Chaud <span>✦</span> DELICES</a>
+        <p class="footer__tag">Traiteur &amp; Pâtissier — saveurs d’ici, élégance d’ailleurs.</p>
         <div class="footer__social">
-          <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.67-.072-4.949-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
-          </a>
-          <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
-          </a>
-          <a href="https://wa.me/212537533953" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp">
+          <a href="https://wa.me/212537404020" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.435 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
           </a>
+          <a href="https://www.facebook.com" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+          </a>
         </div>
       </div>
-      <div class="footer__links">
-        <div>
-          <h4>Navigation</h4>
-          <ul>
-            <li><a href="#activites">Activités</a></li>
-            <li><a href="#tarifs">Tarifs</a></li>
-            <li><a href="#horaires">Horaires</a></li>
-            <li><a href="#contact">Contact</a></li>
-          </ul>
-        </div>
+      <div>
+        <h4>Navigation</h4>
+        <ul>
+          <li><a href="#home" data-route>Accueil</a></li>
+          <li><a href="#menu" data-route>Menu</a></li>
+          <li><a href="#patisserie" data-route>Pâtisseries</a></li>
+          <li><a href="#traiteur" data-route>Traiteur</a></li>
+          <li><a href="#galerie" data-route>Galerie</a></li>
+          <li><a href="#avis" data-route>Avis</a></li>
+          <li><a href="#contact" data-route>Contact</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Contact</h4>
+        <p class="footer__tag">Bd Dr Abdelkrim Al Khateb<br />Témara, Maroc · W3GC+CF</p>
+        <p class="footer__tag"><a href="tel:+212537404020">05 37 40 40 20</a></p>
       </div>
     </div>
-    <p class="footer__bottom">© <span id="year"></span> Belgaform Training Center. Tous droits réservés.</p>
+    <p class="footer__bottom">© 2025 Art Y Chaud DELICES — Tous droits réservés.</p>
   </footer>
+
+  <a href="https://wa.me/212537404020" class="wa-float" target="_blank" rel="noopener noreferrer" data-tip="Commander sur WhatsApp" aria-label="Commander sur WhatsApp">
+    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.435 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+  </a>
+
+  <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Agrandissement photo" hidden>
+    <button type="button" class="lightbox__close" id="lightboxClose" aria-label="Fermer">&times;</button>
+    <img src="" alt="" id="lightboxImg" />
+  </div>
 
   <script>
     (function () {
-      var slides = document.querySelectorAll(".hero__slide");
-      var i = 0;
-      function next() {
-        slides[i].classList.remove("is-active");
-        i = (i + 1) % slides.length;
-        slides[i].classList.add("is-active");
+      var routes = ["home", "menu", "patisserie", "traiteur", "galerie", "avis", "contact"];
+      var pages = {};
+      routes.forEach(function (r) {
+        pages[r] = document.getElementById("page-" + r);
+      });
+
+      function getRouteFromHash() {
+        var h = (location.hash || "#home").replace(/^#/, "").toLowerCase();
+        if (!h || routes.indexOf(h) === -1) return "home";
+        return h;
       }
-      setInterval(next, 5000);
 
-      var scheduleGrid = document.getElementById("scheduleGrid");
-      var days = [
-        { short: "Lun", full: "Lundi", hours: "09:00 – 22:00" },
-        { short: "Mar", full: "Mardi", hours: "09:00 – 22:00" },
-        { short: "Mer", full: "Mercredi", hours: "09:00 – 22:00" },
-        { short: "Jeu", full: "Jeudi", hours: "09:00 – 22:00" },
-        { short: "Ven", full: "Vendredi", hours: "09:00 – 22:00" },
-        { short: "Sam", full: "Samedi", hours: "09:00 – 20:00" },
-        { short: "Dim", full: "Dimanche", hours: "Fermé", closed: true }
-      ];
-      var today = new Date().getDay();
-      var mapJs = [1, 2, 3, 4, 5, 6, 0];
-      days.forEach(function (d, idx) {
-        var el = document.createElement("div");
-        el.className = "schedule__day";
-        el.setAttribute("role", "listitem");
-        if (mapJs[idx] === today) el.classList.add("is-today");
-        el.innerHTML =
-          '<div class="schedule__day-name">' +
-          d.short +
-          '</div><div class="schedule__hours' +
-          (d.closed ? " closed" : "") +
-          '">' +
-          d.hours +
-          "</div>";
-        scheduleGrid.appendChild(el);
+      function showPage(id) {
+        routes.forEach(function (r) {
+          var el = pages[r];
+          if (!el) return;
+          el.classList.toggle("is-active", r === id);
+        });
+        document.querySelectorAll(".nav__list a[data-route]").forEach(function (a) {
+          var href = a.getAttribute("href") || "";
+          var rid = href.replace(/^#/, "");
+          a.classList.toggle("is-active", rid === id);
+        });
+        window.scrollTo({ top: 0, behavior: "smooth" });
+        setTimeout(initReveal, 80);
+      }
+
+      function onHash() {
+        showPage(getRouteFromHash());
+      }
+
+      window.addEventListener("hashchange", onHash);
+      document.querySelectorAll("a[data-route]").forEach(function (a) {
+        a.addEventListener("click", function () {
+          var panel = document.getElementById("navPanel");
+          var toggle = document.getElementById("navToggle");
+          if (panel && panel.classList.contains("is-open")) {
+            panel.classList.remove("is-open");
+            if (toggle) toggle.setAttribute("aria-expanded", "false");
+          }
+        });
       });
 
-      document.getElementById("year").textContent = new Date().getFullYear();
+      var navToggle = document.getElementById("navToggle");
+      var navPanel = document.getElementById("navPanel");
+      if (navToggle && navPanel) {
+        navToggle.addEventListener("click", function () {
+          var open = !navPanel.classList.contains("is-open");
+          navPanel.classList.toggle("is-open", open);
+          navToggle.setAttribute("aria-expanded", open ? "true" : "false");
+        });
+      }
 
-      var fadeEls = document.querySelectorAll(".fade-up");
-      var obs = new IntersectionObserver(
-        function (entries) {
-          entries.forEach(function (entry) {
-            if (entry.isIntersecting) entry.target.classList.add("is-visible");
-          });
-        },
-        { threshold: 0.12, rootMargin: "0px 0px -40px 0px" }
-      );
-      fadeEls.forEach(function (el) {
-        obs.observe(el);
-      });
+      var header = document.getElementById("header");
+      window.addEventListener("scroll", function () {
+        if (!header) return;
+        header.classList.toggle("is-scrolled", window.scrollY > 24);
+      }, { passive: true });
 
-      var counted = false;
-      var statObs = new IntersectionObserver(
-        function (entries) {
-          entries.forEach(function (entry) {
-            if (!entry.isIntersecting || counted) return;
-            counted = true;
-            document.querySelectorAll(".stat-glass .num").forEach(function (node) {
-              var target = parseInt(node.getAttribute("data-target"), 10);
-              var dur = 1400;
-              var start = null;
-              function tick(ts) {
-                if (!start) start = ts;
-                var p = Math.min((ts - start) / dur, 1);
-                var eased = 1 - Math.pow(1 - p, 3);
-                var val = Math.round(eased * target);
-                node.textContent = p < 1 ? String(val) : val + "+";
-                if (p < 1) requestAnimationFrame(tick);
-              }
-              requestAnimationFrame(tick);
+      var revealObserver;
+      function initReveal() {
+        if (revealObserver) revealObserver.disconnect();
+        revealObserver = new IntersectionObserver(
+          function (entries) {
+            entries.forEach(function (e) {
+              if (e.isIntersecting) e.target.classList.add("is-in");
             });
+          },
+          { threshold: 0.12, rootMargin: "0px 0px -30px 0px" }
+        );
+        document.querySelectorAll(".spa-page.is-active .reveal").forEach(function (el) {
+          revealObserver.observe(el);
+        });
+      }
+
+      var patisserieProducts = [
+        { name: "Cornes de gazelle", desc: "Amande, fleur d’oranger et feuille de brick fine.", img: "assets/art-douceurs-sucrees.png" },
+        { name: "Chebbakia & makrout", desc: "Classiques du Ramadan, miel et sésame.", img: "assets/art-douceurs-sucrees.png" },
+        { name: "Baqlawa & cigares", desc: "Feuilletés aux amandes, miel et parfums orientaux.", img: "assets/art-douceurs-sucrees.png" },
+        { name: "Macarons artisanaux", desc: "Parfums variés, coque légère et ganache onctueuse.", img: "assets/art-macarons.png" },
+        { name: "Viennoiseries du matin", desc: "Croissants, pains au chocolat et pains suisses.", img: "assets/art-viennoiserie.png" },
+        { name: "Pain & baguettes", desc: "Baguettes au pavot, sésame, complète ou nature.", img: "assets/art-boulanger.png" },
+        { name: "Beghrir & rghayef", desc: "Crêpes mille trous et msemen garnis ou nature.", img: "assets/art-petits-delices.png" },
+        { name: "Gâteau Opéra", desc: "Chocolat, café et biscuit moelleux en fines couches.", img: "assets/art-traiteur-plateau.png" },
+        { name: "Forêt noire", desc: "Cerises, chantilly et chocolat pour les grandes tables.", img: "assets/art-macarons.png" },
+        { name: "Mille-feuille vanille", desc: "Pâte feuilletée croustillante et crème pâtissière.", img: "assets/art-viennoiserie.png" }
+      ];
+
+      var traiteurProducts = [
+        { name: "Pastilla au poulet", desc: "Poulet, amandes et feuille de brick — du mini au grand format.", img: "assets/art-pastilla.png" },
+        { name: "Pastilla fruits de mer", desc: "Crevettes et poissons, équilibre sucré-salé.", img: "assets/art-pastilla-2.png" },
+        { name: "Plateau traiteur", desc: "Canapés froids, assortiments salés pour réceptions.", img: "assets/art-traiteur-plateau.png" },
+        { name: "Mini pizzas", desc: "Thon, viande hachée, crevettes — format apéritif.", img: "assets/art-mini-pizzas.png" },
+        { name: "Briouates & nems", desc: "Feuilletés et rouleaux garnis, saveurs au choix.", img: "assets/art-briouates-nems.png" },
+        { name: "Tajines & plats mijotés", desc: "Plats chauds pour buffets et repas familiaux.", img: "assets/art-traiteur-plateau.png" },
+        { name: "Couscous festif", desc: "Service traiteur pour grandes tablées.", img: "assets/art-pastilla.png" },
+        { name: "Mini quiches & vol-au-vent", desc: "Bouchées salées élégantes.", img: "assets/art-mini-pizzas.png" }
+      ];
+
+      function waLink(text) {
+        return "https://wa.me/212537404020?text=" + encodeURIComponent(text);
+      }
+
+      function fillProductGrid(containerId, items) {
+        var root = document.getElementById(containerId);
+        if (!root) return;
+        root.innerHTML = "";
+        items.forEach(function (p, i) {
+          var msg = "Bonjour Art Y Chaud, je souhaite commander : " + p.name + ". Merci !";
+          var card = document.createElement("article");
+          card.className = "product-card reveal";
+          card.innerHTML =
+            '<img src="' + p.img + '" alt="' + p.name.replace(/"/g, "") + '" width="400" height="200" loading="lazy" />' +
+            '<div class="product-card__body">' +
+            "<h3>" + p.name + "</h3>" +
+            "<p>" + p.desc + "</p>" +
+            '<a class="btn btn--wa" href="' + waLink(msg) + '" target="_blank" rel="noopener noreferrer">Commander via WhatsApp</a>' +
+            "</div>";
+          root.appendChild(card);
+        });
+      }
+
+      var galleryItems = [
+        { src: "assets/art-enseigne.png", cat: "evenements", alt: "Enseigne Art Y Chaud" },
+        { src: "assets/art-brand-hero.png", cat: "evenements", alt: "Identité Art Y Chaud" },
+        { src: "assets/art-boulanger.png", cat: "patisserie", alt: "Pain artisanal" },
+        { src: "assets/art-carte-contact.png", cat: "evenements", alt: "Carte de visite" },
+        { src: "assets/art-viennoiserie.png", cat: "patisserie", alt: "Viennoiseries" },
+        { src: "assets/art-traiteur-plateau.png", cat: "plats", alt: "Plateau traiteur" },
+        { src: "assets/art-pastilla.png", cat: "plats", alt: "Pastilla" },
+        { src: "assets/art-pastilla-2.png", cat: "plats", alt: "Pastilla" },
+        { src: "assets/art-mini-pizzas.png", cat: "plats", alt: "Mini pizzas et quiches" },
+        { src: "assets/art-douceurs-sucrees.png", cat: "patisserie", alt: "Douceurs sucrées" },
+        { src: "assets/art-briouates-nems.png", cat: "plats", alt: "Briouates et nems" },
+        { src: "assets/art-macarons.png", cat: "patisserie", alt: "Macarons" },
+        { src: "assets/art-petits-delices.png", cat: "patisserie", alt: "Petits délices" },
+        { src: "assets/art-jus-sandwichs.png", cat: "plats", alt: "Jus et sandwichs" }
+      ];
+
+      function buildGallery() {
+        var grid = document.getElementById("galleryGrid");
+        if (!grid) return;
+        grid.innerHTML = "";
+        var lb = document.getElementById("lightbox");
+        var lbImg = document.getElementById("lightboxImg");
+        galleryItems.forEach(function (g) {
+          var btn = document.createElement("button");
+          btn.type = "button";
+          btn.className = "gallery-item reveal";
+          btn.dataset.cat = g.cat;
+          btn.innerHTML = '<img src="' + g.src + '" alt="' + g.alt + '" width="400" height="400" loading="lazy" />';
+          btn.addEventListener("click", function () {
+            if (!lb || !lbImg) return;
+            lbImg.src = g.src;
+            lbImg.alt = g.alt;
+            lb.classList.add("is-open");
+            lb.hidden = false;
           });
-        },
-        { threshold: 0.35 }
-      );
-      var aboutStats = document.querySelector(".about__stats");
-      if (aboutStats) statObs.observe(aboutStats.parentElement || aboutStats);
+          grid.appendChild(btn);
+        });
+      }
+
+      var lightbox = document.getElementById("lightbox");
+      var lightboxClose = document.getElementById("lightboxClose");
+      var lightboxImg = document.getElementById("lightboxImg");
+      function closeLb() {
+        if (!lightbox) return;
+        lightbox.classList.remove("is-open");
+        lightbox.hidden = true;
+        if (lightboxImg) lightboxImg.src = "";
+      }
+      if (lightboxClose) lightboxClose.addEventListener("click", closeLb);
+      if (lightbox) lightbox.addEventListener("click", function (e) {
+        if (e.target === lightbox) closeLb();
+      });
+      document.addEventListener("keydown", function (e) {
+        if (e.key === "Escape") closeLb();
+      });
+
+      document.querySelectorAll(".filter-btn").forEach(function (b) {
+        b.addEventListener("click", function () {
+          var f = b.getAttribute("data-filter");
+          document.querySelectorAll(".filter-btn").forEach(function (x) { x.classList.toggle("is-on", x === b); });
+          document.querySelectorAll(".gallery-item").forEach(function (item) {
+            var c = item.dataset.cat;
+            var show = f === "all" || c === f;
+            item.classList.toggle("is-hidden", !show);
+          });
+        });
+      });
+
+      var devisBtn = document.getElementById("devisWa");
+      if (devisBtn) {
+        devisBtn.href = waLink("Bonjour Art Y Chaud, je souhaite un devis traiteur pour un événement. Merci de me recontacter.");
+      }
+
+      var contactForm = document.getElementById("contactForm");
+      if (contactForm) {
+        contactForm.addEventListener("submit", function (e) {
+          e.preventDefault();
+          var name = document.getElementById("cf-name").value.trim();
+          var phone = document.getElementById("cf-phone").value.trim();
+          var msg = document.getElementById("cf-msg").value.trim();
+          if (!name || !phone || !msg) return;
+          var body = "Bonjour Art Y Chaud,\n\nNom : " + name + "\nTéléphone : " + phone + "\n\nMessage :\n" + msg;
+          window.open(waLink(body), "_blank", "noopener,noreferrer");
+        });
+      }
+
+      fillProductGrid("patisserieGrid", patisserieProducts);
+      fillProductGrid("traiteurGrid", traiteurProducts);
+      buildGallery();
+
+      if (!location.hash || location.hash === "#") {
+        history.replaceState(null, "", "#home");
+      }
+      onHash();
+      setTimeout(function () { document.body.classList.remove("hero-load"); }, 1200);
+      initReveal();
     })();
   </script>
 </body>
